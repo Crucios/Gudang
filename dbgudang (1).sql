@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 26, 2020 at 11:22 AM
+-- Generation Time: Oct 16, 2020 at 12:28 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.4
 
@@ -70,6 +70,13 @@ CREATE TABLE `gudang` (
   `ukuran_x` int(11) NOT NULL,
   `ukuran_y` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `gudang`
+--
+
+INSERT INTO `gudang` (`id_gudang`, `nama`, `alamat`, `username`, `ukuran_x`, `ukuran_y`) VALUES
+(1, 'gudang percobaan', 'di tengah hutan', 'bayu', 20, 30);
 
 -- --------------------------------------------------------
 
@@ -163,7 +170,7 @@ ALTER TABLE `grup_rak`
 -- AUTO_INCREMENT for table `gudang`
 --
 ALTER TABLE `gudang`
-  MODIFY `id_gudang` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_gudang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `rak`
