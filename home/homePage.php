@@ -2,16 +2,6 @@
     <head>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $("#addPage").click(function(){
-                window.location.href="addPage.php";
-            });
-
-
-        });
-    </script>
     </head>
     <body>
 
@@ -43,7 +33,7 @@
       <div id="listGudang" style="margin-top:30px;">
         <div class="card" style ="width:70%; margin:0 auto;">
             <?php
-            require_once("connect.php");
+            require_once("../php/connect.php");
             $q = mysqli_query($con, "SELECT * FROM gudang");
             if(!empty($q)){
                 while ($row = mysqli_fetch_assoc($q)) {
@@ -59,6 +49,15 @@
             ?>
             </div>
         </div>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script type="text/javascript">
+        $(document).ready(function(){
+            $("#addPage").click(function(){
+                window.location.href="../Gudang/AddGudang.php";
+            });
 
+
+        });
+    </script>
     </body>
 </html>
