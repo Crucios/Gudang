@@ -6,8 +6,7 @@
         <link rel="stylesheet" href="css/EditGudang.css">
     <body>
         <!-- tabel list gudang-->
-        <div class="container" style=" ">
-            <div id="grid"></div>
+        <div class="container" id="grid">
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script type="text/javascript">
@@ -30,8 +29,14 @@
                         var responseJSON = $.parseJSON(response);
                         var ukuran_x = responseJSON.x
                         var ukuran_y = responseJSON.y
-                        var sizeCol = 12/ ukuran_x;
+                        var window_width = $( window ).width();
+                        var grid_width = ukuran_x * 100;
 
+                        if(grid_width > window_width - 100){
+                            grid_width = window_width - 100;
+                        }
+                        $('#grid').css({'width':grid_width+'px'});
+                        
                         var markup = "";
                         for(let i=0;i<ukuran_y;i++){
                             markup += "<div class='row section-box'>";
@@ -43,7 +48,8 @@
 
                         $("#grid").html(markup);
 
-                        var cw = $('.gridCells').width();
+                        var cw = $('.gridCells').outerWidth();
+                        console.log(cw);
                         $('.gridCells').css({'height':cw+'px'});
                     }
 			    });
