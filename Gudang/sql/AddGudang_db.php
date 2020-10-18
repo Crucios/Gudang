@@ -1,7 +1,6 @@
 <?php
-
+session_start();
 require_once "../../php/connect.php";
-$errOldPass = $errNewPass = $errConfirmPass = "";
 $output = array('success' => false, 'message' => null);
 
 if(isset($_POST["ukuran_x"]) && $_POST["ukuran_x"] != "" && isset($_POST["ukuran_y"]) && $_POST["ukuran_y"] != ""){
@@ -9,10 +8,12 @@ if(isset($_POST["ukuran_x"]) && $_POST["ukuran_x"] != "" && isset($_POST["ukuran
     $ukuran_y = test_input($_POST["ukuran_y"]);
     
     $query = mysqli_query($con, "INSERT INTO gudang (id_gudang, ukuran_x, ukuran_y) VALUES(NULL, $ukuran_x, $ukuran_y)");
+    $last_id = mysqli_insert_id($con);
 
     if($query){
         $output['message'] = "Gudang berhasil ditambahkan!";
         $output["success"] = true;
+        $_SESSION['idgudang'] = $last_id;
     }else{
         $output['message'] = "Gudang gagal ditambahkan!";
         $output["success"] = false;

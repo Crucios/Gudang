@@ -1,0 +1,12 @@
+.container{
+    margin-top:30px;
+    padding: 50px 50px 50px;
+}
+
+.gridCells{
+    display: grid;
+    box-sizing: border-box;
+    border: 1px solid;
+    vertical-align: middle;
+    text-align: center;
+}

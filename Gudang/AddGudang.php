@@ -54,24 +54,9 @@
                         ukuran_y:ukuran_y
                     },
                     success: function(response){
-                        console.log(response);
-                        // var responseJSON = $.parseJSON(response);
-                        // console.log(responseJSON.success);
-                        // console.log(responseJSON.message);
-                        // $("#passwordErrorHandler").html(responseJSON.errorOld);
-                        // $("#change_passwordErrorHandler").html(responseJSON.errorNew);
-                        // $("#confirm_passwordErrorHandler").html(responseJSON.errConfirm);
-
-                        // if(responseJSON.message == "Password successfully changed!"){
-                        //     var alert = "success";
-                        // }else{
-                        //     var alert = "danger";
-                        // }
-
-                        // var alert = "<div class='alert alert-" + alert + " alert-dismissible'><button type='button' class='close' data-dismiss='alert'>&times;</button><strong>" + responseJSON.message + "</strong></div>";
-                        // $("#alert").html(alert);
-
-                        window.location.href="../php/AddGudang.php";
+                        var responseJSON = $.parseJSON(response);
+                        alert(responseJSON.message);
+                        window.location.href="EditGudang.php";
                     }
 			    });
             });
