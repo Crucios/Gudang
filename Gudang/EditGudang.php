@@ -30,7 +30,7 @@
                         var ukuran_x = responseJSON.x
                         var ukuran_y = responseJSON.y
                         var window_width = $( window ).width();
-                        var grid_width = ukuran_x * 100;
+                        var grid_width = ukuran_x * 75;
 
                         if(grid_width > window_width - 100){
                             grid_width = window_width - 100;
