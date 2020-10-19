@@ -43,17 +43,18 @@
                         
                         var markup = "";
                         for(let i=0;i<ukuran_y;i++){
-                            markup += "<div class='row section-box'>";
+                            markup += "<div class='row rowWidth'>";
                             for(let j=0;j<ukuran_x;j++){
-                                markup += "<div class='col gridCells'>" + j + "</div>";
+                                markup += "<div class='gridCells'>" + j + "</div>";
                             }
                             markup += "</div>";
                         }
 
                         $("#grid").html(markup);
 
+                        var rw = $('.rowWidth').outerWidth();
+                        $('.gridCells').css({'width':rw/ukuran_x+'px'});
                         var cw = $('.gridCells').outerWidth();
-                        console.log(cw);
                         $('.gridCells').css({'height':cw+'px'});
                     }
 			    });
