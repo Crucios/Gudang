@@ -21,10 +21,14 @@
             });
 
             function refreshGrid(){
+                var idgudang = <?php echo $_GET['id']; ?>;
                 $.ajax({
                     url: 'sql/GetGudang_db.php',
-                    type: 'POST',
+                    type: 'GET',
                     datatype: 'json',
+                    data: {
+                        id:idgudang
+                    },
                     success: function(response){
                         var responseJSON = $.parseJSON(response);
                         var ukuran_x = responseJSON.x

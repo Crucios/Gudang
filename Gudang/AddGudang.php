@@ -56,7 +56,7 @@
                     success: function(response){
                         var responseJSON = $.parseJSON(response);
                         alert(responseJSON.message);
-                        window.location.href="EditGudang.php";
+                        window.location.href="EditGudang.php?id=" + responseJSON.id;
                     }
 			    });
             });

@@ -1,9 +1,10 @@
 <?php
-session_start();
+// session_start();
 require_once "../../php/connect.php";
 $output = array('success' => false, 'message' => null, 'x' => 0, 'y' => 0);
 
-$idgudang = $_SESSION['idgudang'];
+// $idgudang = $_SESSION['idgudang'];
+$idgudang = $_GET["id"];
 
 $query = mysqli_query($con, "SELECT ukuran_x,ukuran_y FROM gudang WHERE id_gudang = $idgudang");
 if(!empty($query)){

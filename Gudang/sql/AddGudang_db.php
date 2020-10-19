@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once "../../php/connect.php";
-$output = array('success' => false, 'message' => null);
+$output = array('success' => false, 'message' => null, 'id'=> 0);
 
 if(isset($_POST["ukuran_x"]) && $_POST["ukuran_x"] != "" && isset($_POST["ukuran_y"]) && $_POST["ukuran_y"] != ""){
     $ukuran_x = test_input($_POST["ukuran_x"]);
@@ -13,7 +13,7 @@ if(isset($_POST["ukuran_x"]) && $_POST["ukuran_x"] != "" && isset($_POST["ukuran
     if($query){
         $output['message'] = "Gudang berhasil ditambahkan!";
         $output["success"] = true;
-        $_SESSION['idgudang'] = $last_id;
+        $output["id"] = $last_id;
     }else{
         $output['message'] = "Gudang gagal ditambahkan!";
         $output["success"] = false;
