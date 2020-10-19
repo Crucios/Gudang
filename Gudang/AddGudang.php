@@ -11,17 +11,34 @@
                 <div class="card-body">
                     <form>
                         <h5 class="card-title">Tambah Gudang Baru</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Masukkan Panjang dan Lebar Gudang Baru</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">Isi setiap kolom dengan lengkap dan benar</h6>
+
+                        <!-- Input Nama Gudang -->
+                        <div class="input-group mb-3" style="margin-bottom:20px;">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-default">Nama Gudang</span>
+                            </div>
+                            <input type="text" id="nama" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
+                        </div>
+
+                        <!-- Input Alamat Gudang -->
+                        <div class="input-group mb-3" style="margin-bottom:20px;">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-default">Alamat Gudang</span>
+                            </div>
+                            <input type="text" id="alamat" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
+                        </div>
 
                         <!-- Input Panjang -->
-                        <div class="input-group mb-3">
+                        <div class="input-group mb-3" style="margin-bottom:20px;">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="inputGroup-sizing-default">Panjang</span>
                             </div>
                             <input type="number" id="ukuran_x_input" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
                         </div>
+
                         <!-- Input Lebar -->
-                        <div class="input-group mb-3">
+                        <div class="input-group mb-3" style="margin-bottom:20px;">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="inputGroup-sizing-default">Lebar</span>
                             </div>
@@ -43,6 +60,9 @@
 
             $("#submitGudang").click(function(){
                 // var username = ;
+                var nama_gudang = $("#nama").val();
+                var alamat = $("#alamat").val();
+
                 var ukuran_x = $("#ukuran_x_input").val();
                 var ukuran_y = $("#ukuran_y_input").val();
                 $.ajax({
@@ -50,6 +70,8 @@
                     type: 'POST',
                     datatype: 'json',
                     data: {
+                        nama:nama_gudang,
+                        alamat:alamat,
                         ukuran_x:ukuran_x,
                         ukuran_y:ukuran_y
                     },

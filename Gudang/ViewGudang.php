@@ -15,6 +15,7 @@
         <!-- tabel list gudang-->
         <div class="container" id="grid">
         </div>
+        </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script type="text/javascript">
         $(document).ready(function(){
@@ -38,27 +39,14 @@
                     },
                     success: function(response){
                         var responseJSON = $.parseJSON(response);
-                        var ukuran_x = responseJSON.x
-                        var ukuran_y = responseJSON.y
-<<<<<<< Updated upstream
-                        var window_width = $( window ).width();
-                        // var grid_width = ukuran_x * 75;
-
-                        // if(grid_width > window_width - 100){
-                        //     grid_width = window_width - 100;
-                        // }
-                        // $('#grid').css({'width':grid_width+'px'});
+                        var ukuran_x = responseJSON.x;
+                        var ukuran_y = responseJSON.y;
+                        var nama = responseJSON.nama;
                         
                         var markup = "";
-                        for(let i=0;i<ukuran_y;i++){
-                            markup += "<div class='row flex-nowrap'>";
-=======
-                        
-                        
-                        var markup = "";
+                        markup += "<div class='title'><h2 style='text-align:center; margin-bottom:50px;'>" + nama + "</h2></div>";
                         for(let i=0;i<ukuran_y;i++){
                             markup += "<div class='row rowWidth'>";
->>>>>>> Stashed changes
                             for(let j=0;j<ukuran_x;j++){
                                 markup += "<div class='gridCells'>" + j + "</div>";
                             }
@@ -67,12 +55,8 @@
 
                         $("#grid").html(markup);
 
-<<<<<<< Updated upstream
-                        $('.gridCells').css({'width':50+'px'});
-=======
                         var rw = $('.rowWidth').outerWidth();
                         $('.gridCells').css({'width':rw/ukuran_x+'px'});
->>>>>>> Stashed changes
                         var cw = $('.gridCells').outerWidth();
                         $('.gridCells').css({'height':cw+'px'});
                     }
