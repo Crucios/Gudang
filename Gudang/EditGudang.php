@@ -40,7 +40,7 @@
                         var responseJSON = $.parseJSON(response);
                         var ukuran_x = responseJSON.x
                         var ukuran_y = responseJSON.y
-                        
+
                         
                         var markup = "";
                         for(let i=0;i<ukuran_y;i++){
@@ -52,7 +52,6 @@
                         }
 
                         $("#grid").html(markup);
-
                         var rw = $('.rowWidth').outerWidth();
                         $('.gridCells').css({'width':rw/ukuran_x+'px'});
                         var cw = $('.gridCells').outerWidth();
