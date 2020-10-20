@@ -31,23 +31,24 @@
       
       <!-- tabel list gudang-->
       <div id="listGudang" style="margin-top:30px;">
-        <div class="card" style ="width:70%; margin:0 auto;">
+        
             <?php
             require_once("../php/connect.php");
             $q = mysqli_query($con, "SELECT * FROM gudang");
             if(!empty($q)){
                 while ($row = mysqli_fetch_assoc($q)) {
+                    echo "<div class='card' style ='width:70%; margin:0 auto; margin-bottom:20px;'>";
                     echo "<div class='card-body'>";
                     echo "<div style='float:right;'>";
                     echo "<button type='button' id='editButton'>Edit</button>
-                    <button type='button' id='viewButton'>View</button>
+                    <button type='button' id='viewButton' onclick='viewGudang(\"" . $row['id_gudang'] . "\")'>View</button>
                     <button type='button' id='deleteButton'>Delete</button></div>";
                     echo "<h4 class='card-title'>" .$row['nama']. "</h4>";
-                    echo "<p class='card-text'>" .$row['alamat']. "</p></div>";
+                    echo "<p class='card-text'>" .$row['alamat']. "</p></div></div>";
                 }
             }
             ?>
-            </div>
+            
         </div>
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script type="text/javascript">
@@ -56,8 +57,12 @@
                 window.location.href="../Gudang/AddGudang.php";
             });
 
-
         });
+
+        function viewGudang(id){
+            var thisID = id;
+            window.location.href = "../Gudang/ViewGudang.php?id=" + thisID;
+        }
     </script>
     </body>
 </html>
