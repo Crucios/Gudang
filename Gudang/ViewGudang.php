@@ -25,8 +25,19 @@
             });
 
             $( window ).resize(function() {
-                refreshGrid();
+                refreshBox();
             });
+
+            function refreshBox(){
+                var window_width = $( window ).width();
+                $('#box').css({'width':window_width-100+'px'});
+                $('#grid').css({'width':first_grid_width+'px'});
+
+                var rw = $('.rowWidth').outerWidth();
+                $('.gridCells').css({'width':50+'px'});
+                var cw = $('.gridCells').outerWidth();
+                $('.gridCells').css({'height':cw+'px'});
+            }
 
             function refreshGrid(){
                 var idgudang = <?php echo $_GET['id']; ?>;
@@ -45,20 +56,22 @@
                         
                         var markup = "";
                         markup += "<div class='title'><h2 style='text-align:center; margin-bottom:50px;'>" + nama + "</h2></div>";
+                        markup += "<table>";
                         for(let i=0;i<ukuran_y;i++){
-                            markup += "<div class='row rowWidth'>";
+                            markup += "<tr>";
                             for(let j=0;j<ukuran_x;j++){
-                                markup += "<div class='gridCells'>" + j + "</div>";
+                                markup += "<td class='gridCells'>"+ j +"</td>";
                             }
-                            markup += "</div>";
+                            markup += "</tr>";
                         }
-
+                        markup += "</table>";
                         $("#grid").html(markup);
 
-                        var rw = $('.rowWidth').outerWidth();
-                        $('.gridCells').css({'width':rw/ukuran_x+'px'});
-                        var cw = $('.gridCells').outerWidth();
-                        $('.gridCells').css({'height':cw+'px'});
+                        if(first_grid_width == 0){
+                            first_grid_width = 50*ukuran_x;
+                        }
+
+                        refreshBox();
                     }
 			    });
             }

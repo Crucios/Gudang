@@ -1,12 +1,17 @@
 .container{
     margin-top:30px;
     padding: 50px 50px 50px;
+    text-align: center;
 }
 
 .gridCells{
-    display: grid;
-    box-sizing: border-box;
     border: 1px solid;
-    vertical-align: middle;
     text-align: center;
+}
+
+#box{
+    margin: auto;
+    padding: 0 50px;
+    overflow-y: hidden;
+    overflow-x: scroll;
 }

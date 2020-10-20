@@ -31,13 +31,16 @@
         <div id="div_selesai"></div>
     </div>
     <!-- tabel list gudang-->
-    <div class="container" id="grid">
+    <div id="box">
+        <div id="grid"></div>
     </div>
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript">
         var data_grup_rak=[]
         var list_rak=[]
         $(document).ready(function(){
+            var first_grid_width = 0;
             refreshGrid();
             $("#addPage").click(function(){
                 window.location.href="../php/AddGudang.php";
@@ -58,8 +61,19 @@
 
             });
             $( window ).resize(function() {
-                refreshGrid();
+                refreshBox();
             });
+
+            function refreshBox(){
+                var window_width = $( window ).width();
+                $('#box').css({'width':window_width-100+'px'});
+                $('#grid').css({'width':first_grid_width+'px'});
+
+                var rw = $('.rowWidth').outerWidth();
+                $('.gridCells').css({'width':50+'px'});
+                var cw = $('.gridCells').outerWidth();
+                $('.gridCells').css({'height':cw+'px'});
+            }
 
             function refreshGrid(){
                 var idgudang = <?php echo $_GET['id']; ?>;
@@ -78,20 +92,23 @@
                         
                         var markup = "";
                         var count=0
+                        var markup = "<table>";
                         for(let i=0;i<ukuran_y;i++){
-                            markup += "<div class='row rowWidth'>";
+                            markup += "<tr>";
                             for(let j=0;j<ukuran_x;j++){
-                                markup += "<div class='gridCells gridkosong' id='"+count+"' onclick='btnRak("+count+")'>" + count + "</div>";
-                                count++
+                                markup += "<td class='gridCells gridkosong' id='"+count+"' onclick='btnRak("+count+")'>" + count + "</td>";
+                                count++;
                             }
-                            markup += "</div>";
+                            markup += "</tr>";
                         }
-                        
+                        markup += "</table>";
                         $("#grid").html(markup);
-                        var rw = $('.rowWidth').outerWidth();
-                        $('.gridCells').css({'width':rw/ukuran_x+'px'});
-                        var cw = $('.gridCells').outerWidth();
-                        $('.gridCells').css({'height':cw+'px'});                        
+
+                        if(first_grid_width == 0){
+                            first_grid_width = 50*ukuran_x;
+                        }
+
+                        refreshBox();
                     }
                 });
             }
