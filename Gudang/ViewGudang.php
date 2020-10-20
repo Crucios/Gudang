@@ -15,6 +15,7 @@
         <!-- tabel list gudang-->
         <div class="container" id="grid">
         </div>
+        </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script type="text/javascript">
         $(document).ready(function(){
@@ -38,11 +39,12 @@
                     },
                     success: function(response){
                         var responseJSON = $.parseJSON(response);
-                        var ukuran_x = responseJSON.x
-                        var ukuran_y = responseJSON.y
-                        
+                        var ukuran_x = responseJSON.x;
+                        var ukuran_y = responseJSON.y;
+                        var nama = responseJSON.nama;
                         
                         var markup = "";
+                        markup += "<div class='title'><h2 style='text-align:center; margin-bottom:50px;'>" + nama + "</h2></div>";
                         for(let i=0;i<ukuran_y;i++){
                             markup += "<div class='row rowWidth'>";
                             for(let j=0;j<ukuran_x;j++){
