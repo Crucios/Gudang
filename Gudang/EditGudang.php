@@ -234,8 +234,6 @@ function getColor(number){
     }
     temprak.push(number)
     return gridcolor=document.querySelector('#color').value
-
-
 }
 </script>
 </body>

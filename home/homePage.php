@@ -83,7 +83,7 @@
                     var responseJSON = $.parseJSON(response);
                     alert(responseJSON.message);
                     
-                    //refreshhome
+                    //refresh home
                     $.ajax({
                         url: 'sql/search_db.php',
                         type: 'POST',
