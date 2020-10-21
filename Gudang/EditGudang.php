@@ -17,43 +17,88 @@
 
     <div class="container">        
         <table class="col-sm-8 offset-2" style="">
+
             <tr>
                 <td>Nama Grup:</td>
                 <td><input type="text" name="grup_rak" id="nama_grup" placeholder="Grup Rak" class="form-control"></td>                        
             </tr>                    
             <tr>
                 <td>Warna: </td>
-                <td><input type="color" id="color"></td>
+                <td><input type="color" id="color" value="#D17A83"></td>
             </tr>            
         </table>
         <br>
+
         <button class="btn btn-primary col-sm-8 offset-2"  id="btn_pilihrak">Pilih Rak</button><br><br>
-        <div id="div_selesai"></div>
+        <button class="btn btn-success col-sm-8 offset-2" id="btn_tambahrak" style="display:none;">Tambah Rak</button>
     </div>
     <!-- tabel list gudang-->
     <div id="box">
         <div id="grid"></div>
     </div>
-    
+    <button class="btn btn-warning col-sm-8 offset-2" id="btn_save">Simpan Semua Rak</button><br><br>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript">
         var data_grup_rak=[]
         var list_rak=[]
+        var pilih_rak=false
+        var temprak=[]
+
         $(document).ready(function(){
             var first_grid_width = 0;
             refreshGrid();
             $("#addPage").click(function(){
                 window.location.href="../php/AddGudang.php";
             });
+            //save
+            $("#btn_save").click(function(){
+                if(data_grup_rak.length==0){
+                    alert("Rak Belum Dipilih");
+                }else{
+                    var idgudang = <?php echo $_GET['id']; ?>;
+                    console.log(JSON.stringify(data_grup_rak))
+                    $.ajax({
+                        url: 'sql/AddRak.php',
+                        type: 'POST',
+                        datatype: 'json',
+                        data: {
+                            id_gudang:idgudang,
+                            data_rak:JSON.stringify(data_grup_rak)
+                        },success:function(response){
+                            alert(response);
+                        },
+                        error: function (jqXHR, exception) {
+                            var msg = '';
+                            if (jqXHR.status === 0) {
+                                msg = 'Not connect.\n Verify Network.';
+                            } else if (jqXHR.status == 404) {
+                                msg = 'Requested page not found. [404]';
+                            } else if (jqXHR.status == 500) {
+                                msg = 'Internal Server Error [500].';
+                            } else if (exception === 'parsererror') {
+                                msg = 'Requested JSON parse failed.';
+                            } else if (exception === 'timeout') {
+                                msg = 'Time out error.';
+                            } else if (exception === 'abort') {
+                                msg = 'Ajax request aborted.';
+                            } else {
+                                msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                            }
+                            $('#post').html(msg);
+                        }
+                    });
+                }
+            })
 
             $("#btn_pilihrak").click(function(){
-                
+
                 if($("#nama_grup").val()!=""){
-                    var btn_tambahrak="<button class=\"btn btn-success col-sm-8 offset-2\" id=\"btn_tambahrak\">Tambah Rak</button>";
-                    $("#div_selesai").append(btn_tambahrak);
+                    pilih_rak=true 
+                    $("#btn_tambahrak").show();
                     $("#nama_grup").attr("disabled", true);
                     $("#color").attr("disabled", true);
-                    $(this).attr("disabled", true);                    
+                    $(this).attr("disabled", true); 
+                    
                 }else{
                     alert("Nama grup rak masih kosong")
                 }
@@ -64,6 +109,29 @@
                 refreshBox();
             });
 
+            $("#btn_tambahrak").click(function(){
+                var a = []
+                for (var i = 0; i < temprak.length; i++) {
+                    a.push(temprak[i])
+                }
+                data_grup_rak.push({
+                    nama_grup: $("#nama_grup").val(),
+                    value:a,
+                    color:document.querySelector('#color').value
+                })
+                console.log(data_grup_rak);
+                temprak.splice(0)
+
+
+                console.log(data_grup_rak);
+                pilih_rak=false
+                $("#color").attr("disabled", false);
+                $("#btn_pilihrak").attr("disabled", false);
+                $("#nama_grup").attr("disabled", false);
+                $("#nama_grup").val("");
+                $(this).hide();
+
+            })
             function refreshBox(){
                 var window_width = $( window ).width();
                 $('#box').css({'width':window_width-100+'px'});
@@ -96,7 +164,7 @@
                         for(let i=0;i<ukuran_y;i++){
                             markup += "<tr>";
                             for(let j=0;j<ukuran_x;j++){
-                                markup += "<td class='gridCells gridkosong' id='"+count+"' onclick='btnRak("+count+")'>" + count + "</td>";
+                                markup += "<td class='gridCells' id='"+count+"' onclick='btnRak("+count+")'>" + count + "</td>";
                                 count++;
                             }
                             markup += "</tr>";
@@ -113,16 +181,48 @@
                 });
             }
 
+
         });
-        function home(){
-            window.location.href = "../Home/homePage.php";
-        }
-        function btnRak(number){
-            console.log(number)
-            var warna= document.querySelector('#color').value
+function home(){
+    window.location.href = "../Home/homePage.php";
+}
+function btnRak(number){
+    if(pilih_rak){
+            // cek sudah terisi atau belum
+            var checkSelected=false
+            loop1:
+            for (var i = 0; i < data_grup_rak.length; i++) {
+              for(var j=0;j<data_grup_rak[i].value.length;j++){
+                if(data_grup_rak[i].value[j]==number){
+                    checkSelected=true;
+                    break loop1;
+                }
+            }
+        }  
+        if(!checkSelected){
+            var warna= getColor(number)
             var id_kolom="#"+number
-            $(id_kolom).css({'background-color': warna})    
+            $(id_kolom).css({'background-color': warna})        
         }
-    </script>
+
+    }
+
+}
+function getColor(number){
+    var gridcolor=""
+    for (var i = 0; i < temprak.length; i++) {
+        if(temprak[i]==number){
+            gridcolor="#ffffff"
+            temprak.splice(i,1);
+            return gridcolor;
+
+        }
+    }
+    temprak.push(number)
+    return gridcolor=document.querySelector('#color').value
+
+
+}
+</script>
 </body>
 </html>
