@@ -43,7 +43,8 @@
         var list_rak=[]
         var pilih_rak=false
         var temprak=[]
-
+        var ukuran_x 
+        var ukuran_y
         $(document).ready(function(){
             var first_grid_width = 0;
             refreshGrid();
@@ -58,14 +59,16 @@
                     var idgudang = <?php echo $_GET['id']; ?>;
                     console.log(JSON.stringify(data_grup_rak))
                     $.ajax({
-                        url: 'sql/AddRak.php',
+                        url: 'sql/AddRak_db.php',
                         type: 'POST',
                         datatype: 'json',
                         data: {
                             id_gudang:idgudang,
                             data_rak:JSON.stringify(data_grup_rak)
                         },success:function(response){
-                            alert(response);
+                            var responseJSON = $.parseJSON(response);
+                            alert(responseJSON.message);
+                            window.location.href="../home/homePage.php";
                         },
                         error: function (jqXHR, exception) {
                             var msg = '';
@@ -110,13 +113,20 @@
             });
 
             $("#btn_tambahrak").click(function(){
+                var b = []
                 var a = []
                 for (var i = 0; i < temprak.length; i++) {
-                    a.push(temprak[i])
+                    number=temprak[i];
+                    var x = number%ukuran_x;
+                    var y = Math.ceil((number- (number % ukuran_x))/ukuran_x);
+                    var koor=[x,y]                    
+                    a.push(koor)
+                    b.push(number);
                 }
                 data_grup_rak.push({
                     nama_grup: $("#nama_grup").val(),
-                    value:a,
+                    koordinat:a,
+                    value:b,
                     color:document.querySelector('#color').value
                 })
                 console.log(data_grup_rak);
@@ -142,7 +152,7 @@
                 var cw = $('.gridCells').outerWidth();
                 $('.gridCells').css({'height':cw+'px'});
             }
-
+            
             function refreshGrid(){
                 var idgudang = <?php echo $_GET['id']; ?>;
                 $.ajax({
@@ -154,8 +164,8 @@
                     },
                     success: function(response){
                         var responseJSON = $.parseJSON(response);
-                        var ukuran_x = responseJSON.x
-                        var ukuran_y = responseJSON.y
+                        ukuran_x = responseJSON.x
+                        ukuran_y = responseJSON.y
 
                         
                         var markup = "";
@@ -186,9 +196,13 @@
 function home(){
     window.location.href = "../Home/homePage.php";
 }
-function btnRak(number){
+
+function btnRak(number){    
+
+
     if(pilih_rak){
             // cek sudah terisi atau belum
+            
             var checkSelected=false
             loop1:
             for (var i = 0; i < data_grup_rak.length; i++) {

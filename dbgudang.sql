@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 21, 2020 at 12:21 PM
+-- Generation Time: Oct 21, 2020 at 04:07 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.4
 
@@ -53,10 +53,30 @@ CREATE TABLE `detail_rak` (
 
 CREATE TABLE `grup_rak` (
   `id_gruprak` int(11) NOT NULL,
-  `nama_grup` int(30) NOT NULL,
+  `nama_grup` varchar(30) NOT NULL,
   `color` varchar(10) NOT NULL,
   `id_gudang` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `grup_rak`
+--
+
+INSERT INTO `grup_rak` (`id_gruprak`, `nama_grup`, `color`, `id_gudang`) VALUES
+(15, 'rak a', '#7a8dd1', 31),
+(16, 'rak b', '#5bcfd7', 31),
+(17, 'rak c', '#5bcfd7', 31),
+(18, 'rak a', '#7a8dd1', 31),
+(19, 'rak b', '#5bcfd7', 31),
+(20, 'rak c', '#5bcfd7', 31),
+(21, 'aaa', '#d17a83', 31),
+(22, 'bb', '#419f85', 31),
+(23, 'cc', '#8b9f41', 31),
+(24, 'aa', '#8b9f41', 31),
+(25, 'bb', '#419f99', 31),
+(26, 'aa', '#d17a83', 31),
+(27, 'a', '#d17a83', 31),
+(28, 'a', '#d17a83', 31);
 
 -- --------------------------------------------------------
 
@@ -98,7 +118,16 @@ INSERT INTO `gudang` (`id_gudang`, `nama`, `alamat`, `username`, `ukuran_x`, `uk
 (19, 'aa', 'df', '', 4, 6),
 (20, 'a', '2', '', 3, 4),
 (21, 'a', '2', '', 3, 15),
-(22, 'q', 'q', '', 15, 4);
+(22, 'q', 'q', '', 15, 4),
+(23, 'a', 'a', '', 4, 4),
+(24, 'a', 'a', '', 3, 4),
+(25, 'a', 'a', '', 3, 3),
+(26, 'adf', 'a', '', 10, 3),
+(27, 'a', 'a', '', 3, 5),
+(28, '234', 'a', '', 3, 5),
+(29, '234', 'a', '', 3, 10),
+(30, 'a', 'a', '', 5, 15),
+(31, 'a', 'a', '', 5, 7);
 
 -- --------------------------------------------------------
 
@@ -110,9 +139,43 @@ CREATE TABLE `rak` (
   `id_rak` int(11) NOT NULL,
   `koordinat_x` int(11) NOT NULL,
   `koordinat_y` int(11) NOT NULL,
+  `posisi_urutan` int(11) NOT NULL,
   `kapasitas` int(11) NOT NULL DEFAULT 0,
   `id_gruprak` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `rak`
+--
+
+INSERT INTO `rak` (`id_rak`, `koordinat_x`, `koordinat_y`, `posisi_urutan`, `kapasitas`, `id_gruprak`) VALUES
+(22, 0, 0, 0, 0, 15),
+(23, 1, 0, 1, 0, 15),
+(24, 2, 0, 2, 0, 16),
+(25, 3, 0, 3, 0, 16),
+(26, 4, 0, 4, 0, 17),
+(27, 0, 1, 5, 0, 17),
+(28, 0, 0, 0, 0, 18),
+(29, 1, 0, 1, 0, 18),
+(30, 2, 0, 2, 0, 19),
+(31, 3, 0, 3, 0, 19),
+(32, 4, 0, 4, 0, 20),
+(33, 0, 1, 5, 0, 20),
+(34, 0, 0, 0, 0, 21),
+(35, 1, 0, 1, 0, 21),
+(36, 2, 0, 2, 0, 22),
+(37, 3, 0, 3, 0, 22),
+(38, 4, 0, 4, 0, 23),
+(39, 0, 1, 5, 0, 23),
+(40, 1, 1, 6, 0, 23),
+(41, 2, 1, 7, 0, 23),
+(42, 0, 0, 0, 0, 24),
+(43, 2, 0, 2, 0, 24),
+(44, 3, 0, 3, 0, 25),
+(45, 4, 0, 4, 0, 25),
+(46, 1, 0, 1, 0, 26),
+(47, 2, 0, 2, 0, 27),
+(48, 4, 0, 4, 0, 28);
 
 -- --------------------------------------------------------
 
@@ -194,19 +257,19 @@ ALTER TABLE `detail_rak`
 -- AUTO_INCREMENT for table `grup_rak`
 --
 ALTER TABLE `grup_rak`
-  MODIFY `id_gruprak` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_gruprak` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `gudang`
 --
 ALTER TABLE `gudang`
-  MODIFY `id_gudang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id_gudang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `rak`
 --
 ALTER TABLE `rak`
-  MODIFY `id_rak` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_rak` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
