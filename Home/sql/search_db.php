@@ -8,9 +8,9 @@
                 echo "<div class='card' style ='width:70%; margin:0 auto; margin-bottom:20px;'>";
                 echo "<div class='card-body'>";
                 echo "<div style='float:right;'>";
-                echo "<button type='button' id='editButton'>Edit</button>
+                echo "<button type='button' id='editButton' onclick='editGudang(\"" . $row['id_gudang'] . "\")'>Edit</button>
                 <button type='button' id='viewButton' onclick='viewGudang(\"" . $row['id_gudang'] . "\")'>View</button>
-                <button type='button' id='deleteButton'>Delete</button></div>";
+                <button type='button' id='deleteButton' onclick='deleteGudang(\"" . $row['id_gudang'] . "\")'>Delete</button></div>";
                 echo "<h4 class='card-title'>" .$row['nama']. "</h4>";
                 echo "<p class='card-text'>" .$row['alamat']. "</p></div></div>";
             }
@@ -23,9 +23,9 @@
                 echo "<div class='card' style ='width:70%; margin:0 auto; margin-bottom:20px;'>";
                 echo "<div class='card-body'>";
                 echo "<div style='float:right;'>";
-                echo "<button type='button' id='editButton'>Edit</button>
+                echo "<button type='button' id='editButton' onclick='editGudang(\"" . $row['id_gudang'] . "\")'>Edit</button>
                 <button type='button' id='viewButton' onclick='viewGudang(\"" . $row['id_gudang'] . "\")'>View</button>
-                <button type='button' id='deleteButton'>Delete</button></div>";
+                <button type='button' id='deleteButton' onclick='deleteGudang(\"" . $row['id_gudang'] . "\")'>Delete</button></div>";
                 echo "<h4 class='card-title'>" .$row['nama']. "</h4>";
                 echo "<p class='card-text'>" .$row['alamat']. "</p></div></div>";
             }

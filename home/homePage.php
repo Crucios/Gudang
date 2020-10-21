@@ -60,9 +60,39 @@
 
         });
 
+        function editGudang(id){
+            var thisID = id;
+            window.location.href = "../Gudang/EditGudang.php?id=" + thisID;
+        }
+
         function viewGudang(id){
             var thisID = id;
             window.location.href = "../Gudang/ViewGudang.php?id=" + thisID;
+        }
+
+        function deleteGudang(id){
+            var thisID = id;
+            $.ajax({
+                url: '../Gudang/sql/DeleteGudang_db.php',
+                type: 'POST',
+                datatype: 'json',
+                data: {
+                    id:thisID
+                },
+                success: function(response){
+                    var responseJSON = $.parseJSON(response);
+                    alert(responseJSON.message);
+                    
+                    //refreshhome
+                    $.ajax({
+                        url: 'sql/search_db.php',
+                        type: 'POST',
+                        success: function(response){
+                            $("#listGudang").html(response);
+                        }
+                    });
+                }
+            });
         }
     </script>
     </body>

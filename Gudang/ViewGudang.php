@@ -13,6 +13,7 @@
             </div>
         </div>
             <!-- tabel list gudang-->
+            <div id="name"></div>
             <div id="box">
                 <div id="grid"></div>
             </div>
@@ -57,7 +58,7 @@
                         var nama = responseJSON.nama;
                         
                         var markup = "";
-                        markup += "<div class='title'><h2 style='text-align:center; margin-bottom:50px;'>" + nama + "</h2></div>";
+                        $("#name").html("<div class='title'><h2 style='text-align:center; margin-bottom:50px;'>" + nama + "</h2></div>");
                         markup += "<table>";
                         for(let i=0;i<ukuran_y;i++){
                             markup += "<tr>";
