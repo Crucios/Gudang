@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 16, 2020 at 12:28 PM
+-- Generation Time: Oct 21, 2020 at 12:21 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.4
 
@@ -53,6 +53,8 @@ CREATE TABLE `detail_rak` (
 
 CREATE TABLE `grup_rak` (
   `id_gruprak` int(11) NOT NULL,
+  `nama_grup` int(30) NOT NULL,
+  `color` varchar(10) NOT NULL,
   `id_gudang` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -76,7 +78,27 @@ CREATE TABLE `gudang` (
 --
 
 INSERT INTO `gudang` (`id_gudang`, `nama`, `alamat`, `username`, `ukuran_x`, `ukuran_y`) VALUES
-(1, 'gudang percobaan', 'di tengah hutan', 'bayu', 20, 30);
+(1, 'gudang percobaan', 'di tengah hutan', 'bayu', 20, 30),
+(3, '', '', '', 1, 2),
+(4, '', '', '', 10, 10),
+(5, '', '', '', 3, 3),
+(6, 'A', 'aa', '', 2, 3),
+(7, 'A', 'aa', '', 2, 3),
+(8, 'A', 'aa', '', 5, 3),
+(9, 'A', 'aa', '', 5, 3),
+(10, '', '', '', 3, 3),
+(11, 'aa', '223', '', 23, 23),
+(12, 'aa', '223', '', 23, 23),
+(13, 'a', '1', '', 2, 3),
+(14, 'a', 'aa', '', 3, 3),
+(15, 'a', 'aa', '', 3, 3),
+(16, 'a', 'aa', '', 3, 3),
+(17, 'a', 'aa', '', 3, 4),
+(18, 'aa', 'a', '', 4, 5),
+(19, 'aa', 'df', '', 4, 6),
+(20, 'a', '2', '', 3, 4),
+(21, 'a', '2', '', 3, 15),
+(22, 'q', 'q', '', 15, 4);
 
 -- --------------------------------------------------------
 
@@ -88,7 +110,7 @@ CREATE TABLE `rak` (
   `id_rak` int(11) NOT NULL,
   `koordinat_x` int(11) NOT NULL,
   `koordinat_y` int(11) NOT NULL,
-  `kapasitas` int(11) NOT NULL,
+  `kapasitas` int(11) NOT NULL DEFAULT 0,
   `id_gruprak` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -100,9 +122,17 @@ CREATE TABLE `rak` (
 
 CREATE TABLE `user` (
   `username` varchar(20) NOT NULL,
-  `password` varchar(6) NOT NULL,
-  `email` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `nama` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`username`, `password`, `email`, `nama`) VALUES
+('a', '$2y$10$JPGrbbujml0412fbxwbQGeSAr0AYNxILrQCOlxyAVUPTXhjws.N2q', 'a@gmail.com', 'a');
 
 --
 -- Indexes for dumped tables
@@ -170,7 +200,7 @@ ALTER TABLE `grup_rak`
 -- AUTO_INCREMENT for table `gudang`
 --
 ALTER TABLE `gudang`
-  MODIFY `id_gudang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_gudang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `rak`
