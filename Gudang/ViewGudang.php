@@ -12,13 +12,15 @@
                 <p class="text2" style="text-align: center; font-family: fontCode;">Manage your storage, manage your world</p>
             </div>
         </div>
-        <!-- tabel list gudang-->
-        <div class="container" id="grid">
-        </div>
+            <!-- tabel list gudang-->
+            <div id="box">
+                <div id="grid"></div>
+            </div>
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script type="text/javascript">
         $(document).ready(function(){
+            var first_grid_width = 0;
             refreshGrid();
             $("#addPage").click(function(){
                 window.location.href="../php/AddGudang.php";
