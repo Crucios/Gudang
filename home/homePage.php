@@ -50,9 +50,28 @@
             ?>
             
         </div>
+
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script type="text/javascript">
         $(document).ready(function(){
+            function refreshhome(search_val){
+                $.ajax({
+                    url: 'sql/search_db.php',
+                    type: 'POST',
+                    data: {
+                        search:search_val
+                    },
+                    success: function(response){
+                        $("#listGudang").html(response);
+                    }
+                });
+            }
+
+            $("#search").on("input", function(){
+                var search_val = $(this).val();
+                refreshhome(search_val);
+            });
+
             $("#addPage").click(function(){
                 window.location.href="../Gudang/AddGudang.php";
             });
