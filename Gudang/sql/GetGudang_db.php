@@ -26,19 +26,23 @@ if(!empty($query)){
                 $cells[$index] = $row_cell['color'];
             }
         }
-
+        
+        $alpha = 'A';
         for($i=0;$i<$row['ukuran_y'];$i++){
             $markup .= "<tr>";
             for($j=0;$j<$row['ukuran_x'];$j++){
+                $shelf_num = $alpha . $j;
+
                 if(isset($cells[strval($count)]) && $cells[strval($count) != '']){
-                    $markup .= "<td class='gridCells' id='".$count."' onclick='btnRak(".$count.")' style='background-color: " . $cells[strval($count)] . "'>" . $count . "</td>";
+                    $markup .= "<td class='gridCells' id='".$count."' onclick='btnRak(".$count.")' style='background-color: " . $cells[strval($count)] . "'>" . $shelf_num . "</td>";
                 }
                 else{
-                    $markup .= "<td class='gridCells' id='".$count."' onclick='btnRak(".$count.")'>" . $count . "</td>";
+                    $markup .= "<td class='gridCells' id='".$count."' onclick='btnRak(".$count.")'></td>";
                 }         
                 $count++;
             }
             $markup .= "</tr>";
+            $alpha++;
         }
         $markup .= "</table>";
 
