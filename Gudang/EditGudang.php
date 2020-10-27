@@ -162,7 +162,80 @@
                 var cw = $('.gridCells').outerWidth();
                 $('.gridCells').css({'height':cw+'px'});
             }
-            
+
+            var letters = (function() {
+                var pub = {};
+                var letterArray = [];
+                
+                pub.increment = function (c) {
+                    letterArray = c.split("");
+                    
+                    if(isLetters(letterArray)){
+                        return(next(c));
+                    } else {
+                        throw new Error('Letters Only');
+                    }                
+                };
+                
+                function isLetters(arr) {
+                    for (var i = 0; i < arr.length; i++) {
+                        if(arr[i].toLowerCase() != arr[i].toUpperCase()){
+                        } else {
+                            return false;
+                        }
+                    }
+                    return true;
+                }            
+                
+                function next(c) {
+                    var u = c.toUpperCase();
+                    if (same(u,'Z')){
+                        var txt = '';
+                        var i = u.length;
+                        while (i--) {
+                            txt += 'A';
+                        }
+                        return (txt+'A');
+                    } else {
+                        var p = "";
+                        var q = "";
+                        if(u.length > 1){
+                            p = u.substring(0, u.length - 1);
+                            q = String.fromCharCode(p.slice(-1).charCodeAt(0));
+                        }
+                        var l = u.slice(-1).charCodeAt(0);
+                        var z = nextLetter(l);
+                        if(z==='A'){
+                            return p.slice(0,-1) + nextLetter(q.slice(-1).charCodeAt(0)) + z;
+                        } else {
+                            return p + z;
+                        }
+                    }
+                }
+    
+                function nextLetter(l){
+                    if(l<90){
+                        return String.fromCharCode(l + 1);
+                    }
+                    else{
+                        return 'A';
+                    }
+                }
+                
+                function same(str,char){
+                    var i = str.length;
+                    while (i--) {
+                        if (str[i]!==char){
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+                
+                //API
+                return pub;
+            }());
+
             function refreshGrid(){
                 var idgudang = <?php echo $_GET['id']; ?>;
                 $.ajax({
@@ -177,17 +250,18 @@
                         ukuran_x = responseJSON.x
                         ukuran_y = responseJSON.y
 
-                        
                         var markup = "";
                         var count=0
                         var markup = "<table>";
+                        var alpha = 'A';
                         for(let i=0;i<ukuran_y;i++){
                             markup += "<tr>";
                             for(let j=0;j<ukuran_x;j++){
-                                markup += "<td class='gridCells' id='"+count+"' onclick='btnRak("+count+")'>" + count + "</td>";
+                                markup += "<td class='gridCells' id='"+count+"' onclick='btnRak("+count+")'>" + alpha + j + "</td>";
                                 count++;
                             }
                             markup += "</tr>";
+                            alpha = letters.increment(alpha);
                         }
                         markup += "</table>";
                         $("#grid").html(markup);
