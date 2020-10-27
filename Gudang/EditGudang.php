@@ -164,8 +164,22 @@
                     },
                     success: function(response){
                         var responseJSON = $.parseJSON(response);
-                        markup = responseJSON.output
+                        ukuran_x = responseJSON.x
+                        ukuran_y = responseJSON.y
 
+                        
+                        var markup = "";
+                        var count=0
+                        var markup = "<table>";
+                        for(let i=0;i<ukuran_y;i++){
+                            markup += "<tr>";
+                            for(let j=0;j<ukuran_x;j++){
+                                markup += "<td class='gridCells' id='"+count+"' onclick='btnRak("+count+")'>" + count + "</td>";
+                                count++;
+                            }
+                            markup += "</tr>";
+                        }
+                        markup += "</table>";
                         $("#grid").html(markup);
 
                         if(first_grid_width == 0){
