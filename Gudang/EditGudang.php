@@ -16,6 +16,7 @@
     <!-- isi data rak -->
 
     <div class="container">        
+        <button class="btn btn-info col-sm-8 offset-2"  id="btn_pilihpintu">1. Pilih Pintu Masuk</button><br><br>
         <table class="col-sm-8 offset-2" style="">
 
             <tr>
@@ -28,9 +29,9 @@
             </tr>            
         </table>
         <br>
-
-        <button class="btn btn-info col-sm-8 offset-2"  id="btn_pilihrak">Pilih Rak</button><br><br>
-        <button class="btn btn-info col-sm-8 offset-2" id="btn_tambahrak" style="display:none;">Tambah Rak</button>
+        
+        <button class="btn btn-info col-sm-8 offset-2"  id="btn_pilihrak">2. Pilih Rak</button><br><br>
+        <button class="btn btn-info col-sm-8 offset-2" id="btn_tambahrak" style="display:none;">Simpan</button>
     </div>
     <datalist id="color_list">
         <option>#cb997e</option>
@@ -45,8 +46,8 @@
     <div id="box">
         <div id="grid"></div>
     </div><br><br>
-    <button class="btn btn-info col-sm-8 offset-2" id="btn_lintasan">Tambah Lintasan</button><br><br>
-    <button class="btn btn-primary col-sm-8 offset-2" id="btn_save">Simpan Semua Rak</button><br><br>
+    <button class="btn btn-info col-sm-8 offset-2" id="btn_pilihlintasan">3. Pilih Lintasan</button><br><br>
+    <button class="btn btn-primary col-sm-8 offset-2" id="btn_save">Simpan ke Database</button><br><br>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript">
         var data_grup_rak=[]
@@ -55,16 +56,33 @@
         var temprak=[]
         var ukuran_x 
         var ukuran_y
-        $(document).ready(function(){
+        var cek_tambahpintu=false
+        var cek_tambahlintassan=false
+        var btn_lintasan_clicked=false
+        $(document).ready(function(){    
+
+            $("#nama_grup").attr("disabled", true);
+            $("#color").attr("disabled", true);
+            $("#btn_pilihrak").attr("disabled",true);
+            $("#btn_pilihlintasan").attr("disabled",true);
+
+
             var first_grid_width = 0;
             refreshGrid();
             $("#addPage").click(function(){
                 window.location.href="../php/AddGudang.php";
             });
             //save
+
             $("#btn_save").click(function(){
                 if(data_grup_rak.length==0){
                     alert("Rak Belum Dipilih");
+                }else if(!cek_tambahlintassan){
+                    alert("Lintasan belum di pilih")
+                }else if(!cek_tambahpintu){
+                    alert("Pintu belum di pilih")
+                }else if(temprak.length>0){
+                    alert("Rak yang dipilih belum tersimpan")
                 }else{
                     var idgudang = <?php echo $_GET['id']; ?>;
                     console.log(JSON.stringify(data_grup_rak))
@@ -102,6 +120,9 @@
                     });
                 }
             })
+            $( window ).resize(function() {
+                refreshBox();
+            });
 
             $("#btn_pilihrak").click(function(){
 
@@ -118,38 +139,78 @@
 
 
             });
-            $( window ).resize(function() {
-                refreshBox();
+
+            $("#btn_pilihpintu").click(function(){
+                pilih_rak=true 
+                $("#btn_tambahrak").show();
+                $(this).attr("disabled", true);
             });
 
+            $("#btn_pilihlintasan").click(function(){
+                pilih_rak=true 
+                btn_lintasan_clicked=true
+                $("#btn_tambahrak").show();
+                $("#btn_pilihrak").attr("disabled",true);
+                $(this).attr("disabled", true);
+            })
             $("#btn_tambahrak").click(function(){
-                var b = []
-                var a = []
-                for (var i = 0; i < temprak.length; i++) {
-                    number=temprak[i];
-                    var x = number%ukuran_x;
-                    var y = Math.ceil((number- (number % ukuran_x))/ukuran_x);
-                    var koor=[x,y]                    
-                    a.push(koor)
-                    b.push(number);
+                if(temprak.length>0){
+                    var nama=""
+                    var color=""
+                    if(!cek_tambahpintu){
+                        nama="Pintu"
+                        cek_tambahpintu=true
+                        color="#fcba03"
+                    }
+                    else{
+                        color=document.querySelector('#color').value
+                        nama=$("#nama_grup").val();
+
+                        if(btn_lintasan_clicked && !cek_tambahlintassan){
+                            cek_tambahlintassan=true
+                            nama="lintasan"
+                            color="#c4c7b5"
+                        }
+                        if(!cek_tambahlintassan){
+                            $("#btn_pilihlintasan").attr("disabled",false)
+
+                        }
+
+
+                    }
+
+                    
+                    var b = []
+                    var a = []
+                    for (var i = 0; i < temprak.length; i++) {
+                        number=temprak[i];
+                        var x = number%ukuran_x;
+                        var y = Math.ceil((number- (number % ukuran_x))/ukuran_x);
+                        var koor=[x,y]                    
+                        a.push(koor)
+                        b.push(number);
+                    }
+                    data_grup_rak.push({
+                        nama_grup: nama,
+                        koordinat:a,
+                        value:b,
+                        color:color
+                    })
+                    console.log(data_grup_rak);
+                    temprak.splice(0)
+
+
+                    console.log(data_grup_rak);
+                    pilih_rak=false
+                    $("#color").attr("disabled", false);
+                    $("#btn_pilihrak").attr("disabled", false);
+                    $("#nama_grup").attr("disabled", false);
+                    $("#nama_grup").val("");
+                    $(this).hide();    
+                }else{
+                    alert("Kolom belum dipilih")
                 }
-                data_grup_rak.push({
-                    nama_grup: $("#nama_grup").val(),
-                    koordinat:a,
-                    value:b,
-                    color:document.querySelector('#color').value
-                })
-                console.log(data_grup_rak);
-                temprak.splice(0)
-
-
-                console.log(data_grup_rak);
-                pilih_rak=false
-                $("#color").attr("disabled", false);
-                $("#btn_pilihrak").attr("disabled", false);
-                $("#nama_grup").attr("disabled", false);
-                $("#nama_grup").val("");
-                $(this).hide();
+                
 
             })
             function refreshBox(){
@@ -236,11 +297,22 @@ function home(){
     window.location.href = "../Home/homePage.php";
 }
 
+
+function numbertoAlpha(num){
+  var s = '', t;
+
+  while (num > 0) {
+    t = (num - 1) % 26;
+    s = String.fromCharCode(65 + t) + s;
+    num = (num - t)/26 | 0;
+}
+return s || undefined;
+}
 function btnRak(number){    
 
 
     if(pilih_rak){
-            // cek sudah terisi atau belum
+            // cek sudah tersimpan rak sebelumnya atau belum
             
             var checkSelected=false
             loop1:
@@ -252,7 +324,8 @@ function btnRak(number){
                 }
             }
         }  
-        if(!checkSelected){
+        //jika belum tersimpan di rak sebelumnya
+        if(!checkSelected){            
             var warna= getColor(number)
             var id_kolom="#"+number
             $(id_kolom).css({'background-color': warna})        
@@ -267,11 +340,21 @@ function getColor(number){
         if(temprak[i]==number){
             gridcolor="#ffffff"
             temprak.splice(i,1);
+            $("#"+number).html("");
             return gridcolor;
 
         }
     }
     temprak.push(number)
+    // return warna pintu
+    if(!cek_tambahpintu){
+        $("#"+number).html("Pintu");
+        return "#fcba03"
+    }
+    //return warna lintasan
+    if(btn_lintasan_clicked && !cek_tambahlintassan){
+        return "#c4c7b5"
+    }
     return gridcolor=document.querySelector('#color').value
 }
 </script>
