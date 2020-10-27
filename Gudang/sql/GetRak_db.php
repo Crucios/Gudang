@@ -4,7 +4,7 @@ require_once "../../php/connect.php";
 
 $data_rak=array("grup_rak"=> array(),"rak"=>array());
 if($_GET){
-	$id_gudang=39;
+	$id_gudang=$_GET["id_gudang"];
 	$query=mysqli_query($con,"SELECT * FROM grup_rak WHERE id_gudang=$id_gudang");
 	if(!empty($query)){
 		while ($row = mysqli_fetch_assoc($query)) {
