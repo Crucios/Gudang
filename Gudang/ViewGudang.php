@@ -63,7 +63,7 @@
                         for(let i=0;i<ukuran_y;i++){
                             markup += "<tr>";
                             for(let j=0;j<ukuran_x;j++){
-                                markup += "<td class='gridCells'>"+ j +"</td>";
+                                markup += "<td class='gridCells' id='"+j+"'></td>";
                             }
                             markup += "</tr>";
                         }
@@ -77,6 +77,36 @@
                         refreshBox();
                     }
 			    });
+
+                $.ajax({
+                    url:'sql/GetRak_db.php',
+                    type:'GET',
+                    datatype:'json',
+                    data:{
+                        id_gudang:idgudang
+                    },
+                    success:function(response){
+                        response = $.parseJSON(response);
+                        console.log(response);
+                        var count=0;
+                        for(var i=0;i<response.grup_rak.length;i++){
+                            var grup_rak=response.grup_rak[i];
+
+                            var nama_grup=grup_rak.nama_grup;
+                            var color=grup_rak.color;
+
+                            var rak=response.rak[i];
+                            //tiap kolom grup_rak
+                            for(var j=0;j<rak.length;j++){
+                                $("#"+count).css({'background-color':color});
+                                $("#"+count).html(nama_grup);
+                                count++;
+                            }
+                            
+                            
+                        }
+                    }
+                })
             }
 
         });

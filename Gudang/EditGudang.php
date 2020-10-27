@@ -24,19 +24,29 @@
             </tr>                    
             <tr>
                 <td>Warna: </td>
-                <td><input type="color" id="color" value="#D17A83"></td>
+                <td><input type="color" id="color" value="#edc4b3" list="color_list"></td>
             </tr>            
         </table>
         <br>
 
-        <button class="btn btn-primary col-sm-8 offset-2"  id="btn_pilihrak">Pilih Rak</button><br><br>
-        <button class="btn btn-success col-sm-8 offset-2" id="btn_tambahrak" style="display:none;">Tambah Rak</button>
+        <button class="btn btn-info col-sm-8 offset-2"  id="btn_pilihrak">Pilih Rak</button><br><br>
+        <button class="btn btn-info col-sm-8 offset-2" id="btn_tambahrak" style="display:none;">Tambah Rak</button>
     </div>
+    <datalist id="color_list">
+        <option>#cb997e</option>
+        <option>#eddcd2</option>
+        <option>#fff1e6</option>
+        <option>#f0efeb</option>
+        <option>#ddbea9</option>
+        <option>#a5a58d</option>
+        <option>#b7b7a4</option>
+    </datalist>
     <!-- tabel list gudang-->
     <div id="box">
         <div id="grid"></div>
-    </div>
-    <button class="btn btn-warning col-sm-8 offset-2" id="btn_save">Simpan Semua Rak</button><br><br>
+    </div><br><br>
+    <button class="btn btn-info col-sm-8 offset-2" id="btn_lintasan">Tambah Lintasan</button><br><br>
+    <button class="btn btn-primary col-sm-8 offset-2" id="btn_save">Simpan Semua Rak</button><br><br>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript">
         var data_grup_rak=[]
