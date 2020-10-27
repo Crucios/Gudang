@@ -60,10 +60,12 @@
                         var markup = "";
                         $("#name").html("<div class='title'><h2 style='text-align:center; margin-bottom:50px;'>" + nama + "</h2></div>");
                         markup += "<table>";
+                        var count = 0;
                         for(let i=0;i<ukuran_y;i++){
                             markup += "<tr>";
                             for(let j=0;j<ukuran_x;j++){
-                                markup += "<td class='gridCells' id='"+j+"'></td>";
+                                markup += "<td class='gridCells' id='"+count+"'></td>";
+                                count++;
                             }
                             markup += "</tr>";
                         }
@@ -88,7 +90,6 @@
                     success:function(response){
                         response = $.parseJSON(response);
                         console.log(response);
-                        var count=0;
                         for(var i=0;i<response.grup_rak.length;i++){
                             var grup_rak=response.grup_rak[i];
 
@@ -98,9 +99,9 @@
                             var rak=response.rak[i];
                             //tiap kolom grup_rak
                             for(var j=0;j<rak.length;j++){
-                                $("#"+count).css({'background-color':color});
-                                $("#"+count).html(nama_grup);
-                                count++;
+                                var posisi_urutan = rak[j].posisi_urutan;
+                                $("#"+posisi_urutan).css({'background-color':color});
+                                $("#"+posisi_urutan).html(nama_grup);
                             }
                             
                             
