@@ -12,6 +12,6 @@
 #box{
     margin: auto;
     padding: 0 50px;
-    max-height: 300px;    
+    max-height: 600px;    
     overflow: auto;
 }
