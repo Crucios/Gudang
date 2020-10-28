@@ -125,8 +125,26 @@
             });
 
             $("#btn_pilihrak").click(function(){
+                var input_nama_grup=$("#nama_grup").val().toUpperCase()
+                var cek_nama=false
+                console.log("input_nama_grup: ",input_nama_grup)
+                for (var i = 0; i < data_grup_rak.length; i++) {
+                    console.log("nama grup: ",data_grup_rak[i].nama_grup)
 
-                if($("#nama_grup").val()!=""){
+                    if(data_grup_rak[i].nama_grup == input_nama_grup){
+                        cek_nama=true
+                        console.log("sama")
+                        break
+                    }
+                }
+                if(cek_nama){
+                    alert("Nama grup sudah ada")
+                }else if(input_nama_grup=="PINTU"){
+                    alert("Nama grup tidak bisa pintu")
+                }else if(input_nama_grup=="LINTASAN"){
+                    alert("Nama grup tidak bisa lintasan")
+                }
+                else if($("#nama_grup").val()!=""){
                     pilih_rak=true 
                     $("#btn_tambahrak").show();
                     $("#nama_grup").attr("disabled", true);
@@ -190,8 +208,9 @@
                         a.push(koor)
                         b.push(number);
                     }
+                    
                     data_grup_rak.push({
-                        nama_grup: nama,
+                        nama_grup: nama.toUpperCase(),
                         koordinat:a,
                         value:b,
                         color:color
