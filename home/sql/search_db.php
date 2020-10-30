@@ -6,19 +6,17 @@
         $query = mysqli_query($con, "SELECT * FROM gudang WHERE nama LIKE '%$search%' OR alamat LIKE '%$search%'");
         if(!empty($query)){
             while ($row = mysqli_fetch_assoc($query)) {
-                echo "<div class='card' style ='width:70%; margin:0 auto; margin-bottom:20px;'>";
-                echo "<div class='card-body'>";
-                echo "<div style='float:right;'>";
-                echo "<button type='button' id='editButton' onclick='editGudang(\"" . $row['id_gudang'] . "\")'>Edit</button>
-                            <button type='button' id='viewButton' onclick='viewGudang(\"" . $row['id_gudang'] . "\")'>View</button>";
+                echo "<div class='card' style ='width:90%; height:150px; margin:0 auto; margin-bottom:20px;'>";
+                echo "<div class='grid-container'>";
+                echo "<div class='judul'><h4 class='namagud'>" .$row['nama']. "</h4></div>";
+                echo "<div class='keterangan'><p class='para'>" .$row['alamat']. "</p></div>";
+                echo "<div class='menu'>";
+                echo "<div class='edit'><button type='button' class='btn' id='editButton' onclick='editGudang(\"" . $row['id_gudang'] . "\")'>Edit</button></div>";
+                echo "<div class='view'><button type='button' class='btn' id='viewButton' onclick='viewGudang(\"" . $row['id_gudang'] . "\")'>View</button></div>";
                 if($_SESSION["type"] == 0){
-                    echo "<button type='button' id='deleteButton' onclick='deleteGudang(\"" . $row['id_gudang'] . "\")'>Delete</button></div>";
+                    echo "<div class='delete'><button type='button' class='btn' id='deleteButton' onclick='deleteGudang(\"" . $row['id_gudang'] . "\")'>Delete</button></div>";
                 }
-                else{
-                    echo "</div>";
-                }
-                echo "<h4 class='card-title'>" .$row['nama']. "</h4>";
-                echo "<p class='card-text'>" .$row['alamat']. "</p></div></div>";
+                echo "</div></div></div>";
             }
         }
     }
@@ -26,19 +24,17 @@
         $query = mysqli_query($con, "SELECT * FROM gudang");
         if(!empty($query)){
             while ($row = mysqli_fetch_assoc($query)) {
-                echo "<div class='card' style ='width:70%; margin:0 auto; margin-bottom:20px;'>";
-                echo "<div class='card-body'>";
-                echo "<div style='float:right;'>";
-                echo "<button type='button' id='editButton' onclick='editGudang(\"" . $row['id_gudang'] . "\")'>Edit</button>
-                            <button type='button' id='viewButton' onclick='viewGudang(\"" . $row['id_gudang'] . "\")'>View</button>";
+                echo "<div class='card' style ='width:90%; height:150px; margin:0 auto; margin-bottom:20px;'>";
+                echo "<div class='grid-container'>";
+                echo "<div class='judul'><h4 class='namagud'>" .$row['nama']. "</h4></div>";
+                echo "<div class='keterangan'><p class='para'>" .$row['alamat']. "</p></div>";
+                echo "<div class='menu'>";
+                echo "<div class='edit'><button type='button' class='btn' id='editButton' onclick='editGudang(\"" . $row['id_gudang'] . "\")'>Edit</button></div>";
+                echo "<div class='view'><button type='button' class='btn' id='viewButton' onclick='viewGudang(\"" . $row['id_gudang'] . "\")'>View</button></div>";
                 if($_SESSION["type"] == 0){
-                    echo "<button type='button' id='deleteButton' onclick='deleteGudang(\"" . $row['id_gudang'] . "\")'>Delete</button></div>";
+                    echo "<div class='delete'><button type='button' class='btn' id='deleteButton' onclick='deleteGudang(\"" . $row['id_gudang'] . "\")'>Delete</button></div>";
                 }
-                else {
-                    echo "</div>";
-                }
-                echo "<h4 class='card-title'>" .$row['nama']. "</h4>";
-                echo "<p class='card-text'>" .$row['alamat']. "</p></div></div>";
+                echo "</div></div></div>";
             }
         }
     }

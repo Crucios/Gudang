@@ -1,3 +1,67 @@
-#jumbotron > image {
-    width : 50%;
+#jumbotron {
+    background: linear-gradient(0deg, rgba(216,207,181,1) 0%, rgba(184,157,100,1) 100%);
+}
+.wrapper{
+    width: 70%;
+    margin: 0 auto;
+}
+#buttons{
+    display: flex;
+    justify-content: space-around;
+}
+.btn-primary{
+    display: flex;
+    background-color: #513826;
+    color: #b89d64;
+}
+#adduser,#addPage,#editButton,#viewButton,#deleteButton{
+    background-color: #513826;
+    color: #b89d64;
+}
+#editButton,#viewButton,#deleteButton{
+    width: 80%;
+}
+#search{
+    height: 38px;
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: 80% 20%;
+    grid-template-rows: 30% 70%;
+    gap: 0px 0px;
+    grid-template-areas:
+      "judul menu"
+      "keterangan menu";
+  }
+  
+.judul { grid-area: judul; }
+
+.keterangan { grid-area: keterangan; }
+
+.menu {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 30% 30% 30%;
+    gap: 4px 0px;
+    grid-template-areas:
+        "edit"
+        "view"
+        "delete";
+    grid-area: menu;
+}
+
+.edit { grid-area: edit; margin : 7px 0px 4px 0px}
+
+.view { grid-area: view; margin : 4px 0px 4px 0px}
+
+.delete { grid-area: delete; margin : 4px 0px 5px 0px}
+
+.para{
+    width: 70%;
+    margin: 10px 20px 10px 20px;
+}
+
+.namagud{
+    width: 70%;
+    margin: 10px 20px 10px 20px;
 }
