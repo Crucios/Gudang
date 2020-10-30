@@ -47,7 +47,7 @@
     <div id="box">
         <div id="grid"></div>
     </div><br><br>
-    <div id="listGrupRak">
+    <div class="container" id="listGrupRak">
     
     </div>
 
@@ -62,10 +62,14 @@
         var temprak=[];
         var ukuran_x;
         var ukuran_y;
-        var cek_tambahpintu=false
-        var cek_tambahlintassan=false
-        var btn_lintasan_clicked=false
+        var cek_tambahpintu=false;
+        var cek_tambahlintassan=false;
+        var btn_lintasan_clicked=false;
         
+        // for select in table
+        var temp_select = false;
+        var name_selected = "";
+
         $(document).ready(function(){
             var first_grid_width = 0;
             refreshGrid();
@@ -165,10 +169,6 @@
                 $("#btn_tambahrak").show();
                 $(this).attr("disabled", true);
             });
-            
-            $( window ).resize(function() {
-                refreshBox();
-            });
 
             $("#btn_pilihlintasan").click(function(){
                 pilih_rak=true 
@@ -176,7 +176,8 @@
                 $("#btn_tambahrak").show();
                 $("#btn_pilihrak").attr("disabled",true);
                 $(this).attr("disabled", true);
-            })
+            });
+
             $("#btn_tambahrak").click(function(){
                 if(temprak.length>0){
                     var nama=""
@@ -203,16 +204,38 @@
 
                     }
 
-                    
-                    var b = []
-                    var a = []
-                    for (var i = 0; i < temprak.length; i++) {
-                        number=temprak[i];
-                        var x = number%ukuran_x;
-                        var y = Math.ceil((number- (number % ukuran_x))/ukuran_x);
-                        var koor=[x,y]                    
-                        a.push(koor)
-                        b.push(number);
+                    var b = [];
+                    var a = [];
+                    if(temp_select){
+                        for (var i = 0; i < temprak.length; i++) {
+                            number = temprak[i];
+                            var x = number%ukuran_x;
+                            var y = Math.ceil((number- (number % ukuran_x))/ukuran_x);
+                            var koor=[x,y]                    
+                            a.push(koor)
+                            b.push(number);
+                        }
+                        temp_select = false;
+                        $("#nama_grup").attr("disabled", false);
+                        $(".select_grup").attr("disabled", false);
+                        $(".delete_grup").attr("disabled", false); 
+                    }else{
+                        for (var i = 0; i < temprak.length; i++) {
+                            number=temprak[i];
+                            var x = number%ukuran_x;
+                            var y = Math.ceil((number- (number % ukuran_x))/ukuran_x);
+                            var koor=[x,y]                    
+                            a.push(koor)
+                            b.push(number);
+                        }
+                        data_grup_rak.push({
+                            nama_grup: nama,
+                            koordinat:a,
+                            value:b,
+                            color:color
+                        })
+                        console.log(data_grup_rak);
+                        temprak.splice(0)
                     }
                     
                     data_grup_rak.push({
@@ -237,7 +260,8 @@
                 }
                 
 
-            })
+            });
+
             function refreshBox(){
                 var window_width = $( window ).width();
                 $('#box').css({'width':window_width-100+'px'});
@@ -401,6 +425,8 @@
                                 value:b,
                                 color:document.querySelector('#color').value
                             });
+
+                            data_grup_rak = temp_data_grup_rak;
                             refreshListGrupRak();
                         }
                     }
@@ -411,7 +437,14 @@
                 console.log(data_grup_rak);
                 var markup = "";
                 for (var i = 0; i < temp_data_grup_rak.length; i++) {
-                    markup += "<p>" + temp_data_grup_rak[i].nama_grup + "</p>";
+                    if(temp_data_grup_rak[i].nama_grup.toLowerCase() != "pintu" && temp_data_grup_rak[i].nama_grup.toLowerCase() != "lintasan"){
+                        var name = temp_data_grup_rak[i].nama_grup;
+                        markup += '<div class="row">' +
+                        '<p class="col-sm-4">' + name + '</p>' +
+                        '<button class="btn btn-info col-sm-2 select_grup" onClick="selectGrup(\'' + name + '\')">Select</button> &nbsp;&nbsp;&nbsp;' +
+                        '<button class="btn btn-info col-sm-2 delete_grup">Delete</button>' +
+                        '</div> <br>';
+                    }
                 }  
                 $("#listGrupRak").html(markup);
             }
@@ -432,11 +465,11 @@
         }
         return s || undefined;
     }
+
     function btnRak(number){    
         if(pilih_rak){
             // cek sudah terisi atau belum
-            
-            var checkSelected=false
+            var checkSelected=false;
             loop1:
             for (var i = 0; i < data_grup_rak.length; i++) {
                 for(var j=0;j<data_grup_rak[i].value.length;j++){
@@ -455,28 +488,57 @@
         }
     }  
 
-function getColor(number){
-    var gridcolor=""
-    for (var i = 0; i < temprak.length; i++) {
-        if(temprak[i]==number){
-            gridcolor="#ffffff"
-            temprak.splice(i,1);
-            $("#"+number).html("");
-            return gridcolor;
+    function searchObjectByName(name){
+        for(var i = 0; i < data_grup_rak.length; i++){
+            if(data_grup_rak[i].nama_grup == name){
+                return data_grup_rak[i];
+            }
         }
     }
-    temprak.push(number)
-    // return warna pintu
-    if(!cek_tambahpintu){
-        $("#"+number).html("Pintu");
-        return "#fcba03"
+
+    function getColor(number){
+        var gridcolor=""
+        for (var i = 0; i < temprak.length; i++) {
+            if(temprak[i]==number){
+                gridcolor="#ffffff"
+                temprak.splice(i,1);
+                $("#"+number).html("");
+                return gridcolor;
+            }
+        }
+        temprak.push(number)
+        // return warna pintu
+        if(cek_tambahpintu){
+            $("#"+number).html("Pintu");
+            return "#fcba03"
+        }
+        //return warna lintasan
+        if(btn_lintasan_clicked && !cek_tambahlintassan){
+            return "#c4c7b5"
+        }
+        //return warna grup rak yang dipilih
+        if(temp_select){
+            gridcolor = searchObjectByName(name_selected).color;
+            return gridcolor;
+        }
+        return gridcolor=document.querySelector('#color').value
     }
-    //return warna lintasan
-    if(btn_lintasan_clicked && !cek_tambahlintassan){
-        return "#c4c7b5"
+
+    function selectGrup(name){
+        pilih_rak=true;
+        temp_select = true;
+        name_selected = name;
+        $("#btn_tambahrak").show();
+        $("#nama_grup").attr("disabled", true);
+        $("#color").attr("disabled", true);
+        $("#btn_pilihrak").attr("disabled",true);
+        $(".select_grup").attr("disabled", true);
+        $(".delete_grup").attr("disabled", true); 
     }
-    return gridcolor=document.querySelector('#color').value
-}
+
+    function deleteGrup(name){
+
+    }
 </script>
 </body>
 </html>
