@@ -174,14 +174,16 @@
 
             $("#btn_pilihpintu").click(function(){
                 pilih_rak=true;
-                cek_tambahpintu = true; 
+                // temp_select = true;
+                cek_tambahpintu = true;
                 $("#btn_tambahrak").show();
                 $(this).attr("disabled", true);
             });
 
             $("#btn_pilihlintasan").click(function(){
-                pilih_rak=true 
-                btn_lintasan_clicked=true
+                pilih_rak=true; 
+                // temp_select = true;
+                btn_lintasan_clicked=true;
                 $("#btn_tambahrak").show();
                 $("#btn_pilihrak").attr("disabled",true);
                 $(this).attr("disabled", true);
@@ -193,9 +195,13 @@
                     var color="";
                     var level="";
                     if(cek_tambahpintu){
-                        nama="Pintu";
+                        nama="Pintu"
                         cek_tambahpintu=false;
                         color="#fcba03";
+                        if(searchObjectByName(nama)){
+                            temp_select=true;
+                            name_selected = nama;
+                        }
                     }
                     else{
                         color=document.querySelector('#color').value
@@ -205,6 +211,10 @@
                             cek_tambahlintassan=true;
                             nama="lintasan";
                             color="#c4c7b5";
+                            if(searchObjectByName(nama)){
+                                temp_select=true;
+                                name_selected = nama;
+                            }
                         }
                         if(!cek_tambahlintassan){
                             $("#btn_pilihlintasan").attr("disabled",false);
@@ -230,6 +240,7 @@
                             if(data_grup_rak[i].nama_grup == name_selected){
                                 var checkVal = true;
                                 var name = colorRak = "";
+                                console.log("PING COK");
                                 loop2:
                                 for(var j = 0; j < data_grup_rak[i].koordinat.length; j++){
                                     loop3:
@@ -283,7 +294,7 @@
                     }
 
                     temprak.splice(0)
-                    console.log(temp_data_grup_rak);
+                    console.log(temp_data_to_query);
                     console.log(data_grup_rak);
 
                     pilih_rak=false
@@ -492,7 +503,8 @@
         }
         //return warna lintasan
         if(btn_lintasan_clicked && !cek_tambahlintassan){
-            return "#c4c7b5"
+            $("#"+number).html("Lintasan");
+            return "#c4c7b5";
         }
         //return warna grup rak yang dipilih
         if(temp_select){
