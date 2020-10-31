@@ -41,7 +41,8 @@ if($_POST){
 		}
 		else{
 			$color=$data_rak[$i]->color;
-			$query=mysqli_query($con,"INSERT INTO grup_rak(nama_grup, color, id_gudang) VALUES('".$nama_grup."', '".$color."','".$id_gudang."')");
+			$level=$data_rak[$i]->level;
+			$query=mysqli_query($con,"INSERT INTO grup_rak(nama_grup, color, id_gudang, jumlah_level) VALUES('".$nama_grup."', '".$color."','".$id_gudang."','".$level."')");
 			$id_grup_rak=mysqli_insert_id($con);
 			
 			if($query){
@@ -54,7 +55,17 @@ if($_POST){
 						$checkQuery = false;
 					}
 				}
+				$get_rak= "SELECT id_rak FROM rak WHERE id_gruprak = $id_grup_rak";
+				$res = $con->query($get_rak);
+				while($row=$res->fetch_assoc()){
+					$temp_idrak = $row["id_rak"];
+					for($x=0;$x<$level;$x++){
+						$generate_barang=mysqli_query($con, "INSERT INTO barang(id_barang,nama_barang,id_rak,level) VALUES(0, '$nama_grup', $temp_idrak, $x+1)");
+					}
+				}
 			}
+			
+			
 			else{
 				$checkQuery = false;
 			}

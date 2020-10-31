@@ -27,7 +27,11 @@
             <tr>
                 <td>Warna: </td>
                 <td><input type="color" id="color" value="#edc4b3" list="color_list"></td>
-            </tr>            
+            </tr>
+            <tr>
+                <td>Jumlah Tingkat: </td>
+                <td><input type="text" id="jmlh_level" placeholder="Jumlah tingkatan rak" class="form-control"></td>
+            </tr>              
         </table>
         <br>
         
@@ -169,7 +173,8 @@
             });
 
             $("#btn_pilihpintu").click(function(){
-                pilih_rak=true 
+                pilih_rak=true;
+                cek_tambahpintu = true; 
                 $("#btn_tambahrak").show();
                 $(this).attr("disabled", true);
             });
@@ -184,12 +189,13 @@
 
             $("#btn_tambahrak").click(function(){
                 if(temprak.length>0){
-                    var nama=""
-                    var color=""
+                    var nama="";
+                    var color="";
+                    var level="";
                     if(cek_tambahpintu){
-                        nama="Pintu"
-                        cek_tambahpintu=true
-                        color="#fcba03"
+                        nama="Pintu";
+                        cek_tambahpintu=false;
+                        color="#fcba03";
                     }
                     else{
                         color=document.querySelector('#color').value
@@ -207,6 +213,7 @@
 
                     var b = [];
                     var a = [];
+                    level = $("#jmlh_level").val();
                     if(temp_select){
                         for (var i = 0; i < temprak.length; i++) {
                             number = temprak[i];
@@ -216,7 +223,7 @@
                             a.push(koor)
                             b.push(number);
                         }
-
+                        
                         // Add koordinat
                         for(var i = 0; i < data_grup_rak.length; i++){
                             loop1:
@@ -270,7 +277,8 @@
                             nama_grup: nama,
                             koordinat:a,
                             value:b,
-                            color:color
+                            color:color,
+                            level:level
                         })
                     }
 
@@ -283,6 +291,8 @@
                     $("#btn_pilihrak").attr("disabled", false);
                     $("#nama_grup").attr("disabled", false);
                     $("#nama_grup").val("");
+                    name_selected = "";
+                    $("#jmlh_level").val("");
                     $(this).hide();    
                 }else{
                     alert("Kolom belum dipilih")
