@@ -289,17 +289,6 @@
                 }
             });
 
-            function refreshBox(){
-                var window_width = $( window ).width();
-                $('#box').css({'width':window_width-100+'px'});
-                $('#grid').css({'width':first_grid_width+'px'});
-
-                var rw = $('.rowWidth').outerWidth();
-                $('.gridCells').css({'width':50+'px'});
-                var cw = $('.gridCells').outerWidth();
-                $('.gridCells').css({'height':cw+'px'});
-            }
-
             var letters = (function() {
                 var pub = {};
                 var letterArray = [];
@@ -373,45 +362,6 @@
                 return pub;
             }());
 
-            function refreshGrid(){
-                var idgudang = <?php echo $_GET['id']; ?>;
-                $.ajax({
-                    url: 'sql/GetGudang_db.php',
-                    type: 'GET',
-                    datatype: 'json',
-                    data: {
-                        id:idgudang
-                    },
-                    success: function(response){
-                        var responseJSON = $.parseJSON(response);
-                        ukuran_x = responseJSON.x
-                        ukuran_y = responseJSON.y
-
-                        var markup = "";
-                        var count=0
-                        var markup = "<table>";
-                        var alpha = 'A';
-                        for(let i=0;i<ukuran_y;i++){
-                            markup += "<tr>";
-                            for(let j=0;j<ukuran_x;j++){
-                                markup += "<td class='gridCells' id='"+count+"' onclick='btnRak("+count+")'>" + alpha + j + "</td>";
-                                count++;
-                            }
-                            markup += "</tr>";
-                            alpha = letters.increment(alpha);
-                        }
-                        markup += "</table>";
-                        $("#grid").html(markup);
-
-                        if(first_grid_width == 0){
-                            first_grid_width = 50*ukuran_x;
-                        }
-
-                        refreshBox();
-                    }
-                });
-            }
-
             function getListGrupRak(){
                 var idgudang = <?php echo $_GET['id']; ?>;
                 
@@ -463,23 +413,6 @@
                         refreshListGrupRak();
                     }
                 })
-            }
-
-            function refreshListGrupRak(){
-                console.log(data_grup_rak);
-                console.log(temp_data_grup_rak);
-                var markup = "";
-                for (var i = 0; i < temp_data_grup_rak.length; i++) {
-                    if(temp_data_grup_rak[i].nama_grup.toLowerCase() != "pintu" && temp_data_grup_rak[i].nama_grup.toLowerCase() != "lintasan"){
-                        var name = temp_data_grup_rak[i].nama_grup;
-                        markup += '<div class="row">' +
-                        '<p class="col-sm-4">' + name + '</p>' +
-                        '<button class="btn btn-info col-sm-2 select_grup" onClick="selectGrup(\'' + name + '\')">Select</button> &nbsp;&nbsp;&nbsp;' +
-                        '<button class="btn btn-info col-sm-2 delete_grup" onClick="deleteGrup(\'' + name + '\')">Delete</button>' +
-                        '</div> <br>';
-                    }
-                }  
-                $("#listGrupRak").html(markup);
             }
         });
         
