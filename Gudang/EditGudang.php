@@ -69,6 +69,7 @@
         // for select in table
         var temp_select = false;
         var name_selected = "";
+        var temp_data_to_query = [];
 
         $(document).ready(function(){
             var first_grid_width = 0;
@@ -91,15 +92,18 @@
                     alert("Rak yang dipilih belum tersimpan")
                 }else{
                     var idgudang = <?php echo $_GET['id']; ?>;
-                    console.log(JSON.stringify(data_grup_rak));
+                    console.log(data_grup_rak);
+                    console.log(temp_data_to_query);
                     $.ajax({
                         url: 'sql/AddRak_db.php',
                         type: 'POST',
                         datatype: 'json',
                         data: {
                             id_gudang:idgudang,
-                            data_rak:JSON.stringify(data_grup_rak)
+                            data_rak:JSON.stringify(data_grup_rak),
+                            temp_data:JSON.stringify(temp_data_to_query)
                         },success:function(response){
+                            alert(response);
                             var responseJSON = $.parseJSON(response);
                             alert(responseJSON.message);
                             window.location.href="../home/homePage.php";
@@ -192,16 +196,13 @@
                         nama=$("#nama_grup").val();
 
                         if(btn_lintasan_clicked && !cek_tambahlintassan){
-                            cek_tambahlintassan=true
-                            nama="lintasan"
-                            color="#c4c7b5"
+                            cek_tambahlintassan=true;
+                            nama="lintasan";
+                            color="#c4c7b5";
                         }
                         if(!cek_tambahlintassan){
-                            $("#btn_pilihlintasan").attr("disabled",false)
-
+                            $("#btn_pilihlintasan").attr("disabled",false);
                         }
-
-
                     }
 
                     var b = [];
@@ -214,6 +215,43 @@
                             var koor=[x,y]                    
                             a.push(koor)
                             b.push(number);
+                        }
+
+                        // Add koordinat
+                        for(var i = 0; i < data_grup_rak.length; i++){
+                            loop1:
+                            if(data_grup_rak[i].nama_grup == name_selected){
+                                var checkVal = true;
+                                var name = colorRak = "";
+                                loop2:
+                                for(var j = 0; j < data_grup_rak[i].koordinat.length; j++){
+                                    loop3:
+                                    for(var k = 0; k < a.length; k++){
+                                        if(data_grup_rak[i].koordinat[j] == a[k] && data_grup_rak[i].value[j] == b[k]){
+                                            name = data_grup_rak[i].nama_grup;
+                                            colorRak = data_grup_rak[i].color;
+                                            checkVal = false;
+                                            break loop3;
+                                        }
+                                    }
+                                }
+                                if(checkVal){
+                                    name = data_grup_rak[i].nama_grup;
+                                    colorRak = data_grup_rak[i].color;
+                                    for(var k = 0; k < a.length; k++){
+                                        data_grup_rak[i].koordinat.push(a[k]);
+                                        data_grup_rak[i].value.push(b[k]);
+                                    }
+
+                                    temp_data_to_query.push({
+                                        nama_grup: name,
+                                        koordinat:a,
+                                        value:b,
+                                        color:colorRak
+                                    });
+                                }
+                                break loop1;
+                            }
                         }
                         temp_select = false;
                         $("#nama_grup").attr("disabled", false);
@@ -234,21 +272,12 @@
                             value:b,
                             color:color
                         })
-                        console.log(data_grup_rak);
-                        temprak.splice(0)
                     }
-                    
-                    data_grup_rak.push({
-                        nama_grup: nama.toUpperCase(),
-                        koordinat:a,
-                        value:b,
-                        color:color
-                    })
-                    console.log(data_grup_rak);
+
                     temprak.splice(0)
-
-
+                    console.log(temp_data_grup_rak);
                     console.log(data_grup_rak);
+
                     pilih_rak=false
                     $("#color").attr("disabled", false);
                     $("#btn_pilihrak").attr("disabled", false);
@@ -258,8 +287,6 @@
                 }else{
                     alert("Kolom belum dipilih")
                 }
-                
-
             });
 
             function refreshBox(){
@@ -402,7 +429,7 @@
                             var grup_rak=response.grup_rak[i];
 
                             var nama_grup=grup_rak.nama_grup;
-                            var color=grup_rak.color;
+                            var colorRak=grup_rak.color;
 
                             var rak=response.rak[i];
 
@@ -411,7 +438,7 @@
                             var a = [];
                             for(var j=0;j<rak.length;j++){
                                 var posisi_urutan = rak[j].posisi_urutan;
-                                $("#"+posisi_urutan).css({'background-color':color});
+                                $("#"+posisi_urutan).css({'background-color':colorRak});
                                 $("#"+posisi_urutan).html(nama_grup);
 
                                 var koor=[rak[j].koordinat_x, rak[j].koordinat_y];                    
@@ -423,12 +450,11 @@
                                 nama_grup: nama_grup,
                                 koordinat:a,
                                 value:b,
-                                color:document.querySelector('#color').value
+                                color:colorRak
                             });
-
-                            data_grup_rak = temp_data_grup_rak;
-                            refreshListGrupRak();
                         }
+                        data_grup_rak = temp_data_grup_rak;
+                        refreshListGrupRak();
                     }
                 })
             }
@@ -491,6 +517,8 @@
     function searchObjectByName(name){
         for(var i = 0; i < data_grup_rak.length; i++){
             if(data_grup_rak[i].nama_grup == name){
+                console.log(data_grup_rak[i]);
+                console.log(name);
                 return data_grup_rak[i];
             }
         }
@@ -537,7 +565,7 @@
     }
 
     function deleteGrup(name){
-
+        
     }
 </script>
 </body>
