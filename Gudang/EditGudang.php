@@ -82,8 +82,10 @@
             //save
 
             $("#btn_save").click(function(){
+                var idgudang = <?php echo $_GET['id']; ?>;
                 if(data_grup_rak.length==0){
                     alert("Rak Belum Dipilih");
+                    window.location.href="AddBarang.php?id=" + idgudang;
                 }else if(!cek_tambahlintassan){
                     alert("Lintasan belum di pilih")
                 }else if(!cek_tambahpintu){
@@ -91,9 +93,8 @@
                 }else if(temprak.length>0){
                     alert("Rak yang dipilih belum tersimpan")
                 }else{
-                    var idgudang = <?php echo $_GET['id']; ?>;
-                    console.log(data_grup_rak);
-                    console.log(temp_data_to_query);
+                    //var idgudang = <?php echo $_GET['id']; ?>;
+                    console.log(JSON.stringify(data_grup_rak));
                     $.ajax({
                         url: 'sql/AddRak_db.php',
                         type: 'POST',
@@ -106,7 +107,7 @@
                             alert(response);
                             var responseJSON = $.parseJSON(response);
                             alert(responseJSON.message);
-                            window.location.href="../home/homePage.php";
+                            window.location.href="AddBarang.php?id=" + idgudang;
                         },
                         error: function (jqXHR, exception) {
                             var msg = '';
