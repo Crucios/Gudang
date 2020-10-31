@@ -8,7 +8,7 @@ if($_POST){
 	$id_gudang=$_POST['id_gudang'];
 	$data_rak=json_decode($_POST['data_rak']);
 	$temp_data_to_query = json_decode($_POST['temp_data']);
-	
+	$output["success"] = true;
 	for($i=0;$i<count($data_rak);$i++)	{
 		$nama_grup = $data_rak[$i]->nama_grup;
 		$sql = "SELECT id_gruprak FROM grup_rak WHERE nama_grup = '$nama_grup' AND id_gudang = $id_gudang";
@@ -63,13 +63,13 @@ if($_POST){
 
 	}
 	
-	if($checkQuery){
-        $output['message'] = "Rak berhasil ditambahkan!";
-        $output["success"] = true;
-    }else{
-        $output['message'] = "Rak gagal ditambahkan!";
-        $output["success"] = false;
-    }
+	// if($checkQuery){
+    //     $output['message'] = "Rak berhasil ditambahkan!";
+    //     $output["success"] = true;
+    // }else{
+    //     $output['message'] = "Rak gagal ditambahkan!";
+    //     $output["success"] = false;
+    // }
 }
 echo json_encode($output);
 

@@ -70,9 +70,9 @@
         var temp_select = false;
         var name_selected = "";
         var temp_data_to_query = [];
+        var first_grid_width = 0;
 
         $(document).ready(function(){
-            var first_grid_width = 0;
             refreshGrid();
             getListGrupRak();
 
@@ -85,11 +85,10 @@
                 var idgudang = <?php echo $_GET['id']; ?>;
                 if(data_grup_rak.length==0){
                     alert("Rak Belum Dipilih");
-                    window.location.href="AddBarang.php?id=" + idgudang;
-                }else if(!cek_tambahlintassan){
-                    alert("Lintasan belum di pilih")
-                }else if(!cek_tambahpintu){
-                    alert("Pintu belum di pilih")
+                // }else if(!cek_tambahlintassan){
+                //     alert("Lintasan belum di pilih")
+                // }else if(!cek_tambahpintu){
+                //     alert("Pintu belum di pilih")
                 }else if(temprak.length>0){
                     alert("Rak yang dipilih belum tersimpan")
                 }else{
@@ -187,7 +186,7 @@
                 if(temprak.length>0){
                     var nama=""
                     var color=""
-                    if(!cek_tambahpintu){
+                    if(cek_tambahpintu){
                         nama="Pintu"
                         cek_tambahpintu=true
                         color="#fcba03"
@@ -290,17 +289,6 @@
                 }
             });
 
-            function refreshBox(){
-                var window_width = $( window ).width();
-                $('#box').css({'width':window_width-100+'px'});
-                $('#grid').css({'width':first_grid_width+'px'});
-
-                var rw = $('.rowWidth').outerWidth();
-                $('.gridCells').css({'width':50+'px'});
-                var cw = $('.gridCells').outerWidth();
-                $('.gridCells').css({'height':cw+'px'});
-            }
-
             var letters = (function() {
                 var pub = {};
                 var letterArray = [];
@@ -374,45 +362,6 @@
                 return pub;
             }());
 
-            function refreshGrid(){
-                var idgudang = <?php echo $_GET['id']; ?>;
-                $.ajax({
-                    url: 'sql/GetGudang_db.php',
-                    type: 'GET',
-                    datatype: 'json',
-                    data: {
-                        id:idgudang
-                    },
-                    success: function(response){
-                        var responseJSON = $.parseJSON(response);
-                        ukuran_x = responseJSON.x
-                        ukuran_y = responseJSON.y
-
-                        var markup = "";
-                        var count=0
-                        var markup = "<table>";
-                        var alpha = 'A';
-                        for(let i=0;i<ukuran_y;i++){
-                            markup += "<tr>";
-                            for(let j=0;j<ukuran_x;j++){
-                                markup += "<td class='gridCells' id='"+count+"' onclick='btnRak("+count+")'>" + alpha + j + "</td>";
-                                count++;
-                            }
-                            markup += "</tr>";
-                            alpha = letters.increment(alpha);
-                        }
-                        markup += "</table>";
-                        $("#grid").html(markup);
-
-                        if(first_grid_width == 0){
-                            first_grid_width = 50*ukuran_x;
-                        }
-
-                        refreshBox();
-                    }
-                });
-            }
-
             function getListGrupRak(){
                 var idgudang = <?php echo $_GET['id']; ?>;
                 
@@ -453,27 +402,17 @@
                                 value:b,
                                 color:colorRak
                             });
+
+                            data_grup_rak.push({
+                                nama_grup: nama_grup,
+                                koordinat:a,
+                                value:b,
+                                color:colorRak
+                            });
                         }
-                        data_grup_rak = temp_data_grup_rak;
                         refreshListGrupRak();
                     }
                 })
-            }
-
-            function refreshListGrupRak(){
-                console.log(data_grup_rak);
-                var markup = "";
-                for (var i = 0; i < temp_data_grup_rak.length; i++) {
-                    if(temp_data_grup_rak[i].nama_grup.toLowerCase() != "pintu" && temp_data_grup_rak[i].nama_grup.toLowerCase() != "lintasan"){
-                        var name = temp_data_grup_rak[i].nama_grup;
-                        markup += '<div class="row">' +
-                        '<p class="col-sm-4">' + name + '</p>' +
-                        '<button class="btn btn-info col-sm-2 select_grup" onClick="selectGrup(\'' + name + '\')">Select</button> &nbsp;&nbsp;&nbsp;' +
-                        '<button class="btn btn-info col-sm-2 delete_grup">Delete</button>' +
-                        '</div> <br>';
-                    }
-                }  
-                $("#listGrupRak").html(markup);
             }
         });
         
@@ -565,8 +504,182 @@
         $(".delete_grup").attr("disabled", true); 
     }
 
-    function deleteGrup(name){
+    var letters = (function() {
+        var pub = {};
+        var letterArray = [];
         
+        pub.increment = function (c) {
+            letterArray = c.split("");
+            
+            if(isLetters(letterArray)){
+                return(next(c));
+            } else {
+                throw new Error('Letters Only');
+            }                
+        };
+        
+        function isLetters(arr) {
+            for (var i = 0; i < arr.length; i++) {
+                if(arr[i].toLowerCase() != arr[i].toUpperCase()){
+                } else {
+                    return false;
+                }
+            }
+            return true;
+        }            
+        
+        function next(c) {
+            var u = c.toUpperCase();
+            if (same(u,'Z')){
+                var txt = '';
+                var i = u.length;
+                while (i--) {
+                    txt += 'A';
+                }
+                return (txt+'A');
+            } else {
+                var p = "";
+                var q = "";
+                if(u.length > 1){
+                    p = u.substring(0, u.length - 1);
+                    q = String.fromCharCode(p.slice(-1).charCodeAt(0));
+                }
+                var l = u.slice(-1).charCodeAt(0);
+                var z = nextLetter(l);
+                if(z==='A'){
+                    return p.slice(0,-1) + nextLetter(q.slice(-1).charCodeAt(0)) + z;
+                } else {
+                    return p + z;
+                }
+            }
+        }
+
+        function nextLetter(l){
+            if(l<90){
+                return String.fromCharCode(l + 1);
+            }
+            else{
+                return 'A';
+            }
+        }
+        
+        function same(str,char){
+            var i = str.length;
+            while (i--) {
+                if (str[i]!==char){
+                    return false;
+                }
+            }
+            return true;
+        }
+        
+        //API
+        return pub;
+    }());
+
+    function refreshBox(){
+        var window_width = $( window ).width();
+        $('#box').css({'width':window_width-100+'px'});
+        $('#grid').css({'width':first_grid_width+'px'});
+
+        var rw = $('.rowWidth').outerWidth();
+        $('.gridCells').css({'width':50+'px'});
+        var cw = $('.gridCells').outerWidth();
+        $('.gridCells').css({'height':cw+'px'});
+    }
+
+    function refreshListGrupRak(){
+        console.log(data_grup_rak);
+        var markup = "";
+        for (var i = 0; i < temp_data_grup_rak.length; i++) {
+            if(temp_data_grup_rak[i].nama_grup.toLowerCase() != "pintu" && temp_data_grup_rak[i].nama_grup.toLowerCase() != "lintasan"){
+                var name = temp_data_grup_rak[i].nama_grup;
+                markup += '<div class="row">' +
+                '<p class="col-sm-4">' + name + '</p>' +
+                '<button class="btn btn-info col-sm-2 select_grup" onClick="selectGrup(\'' + name + '\')">Select</button> &nbsp;&nbsp;&nbsp;' +
+                '<button class="btn btn-info col-sm-2 delete_grup" onClick="deleteGrup(\'' + name + '\')">Delete</button>' +
+                '</div> <br>';
+            }
+        }  
+        $("#listGrupRak").html(markup);
+    }
+
+    function refreshGrid(){
+        var idgudang = <?php echo $_GET['id']; ?>;
+        $.ajax({
+            url: 'sql/GetGudang_db.php',
+            type: 'GET',
+            datatype: 'json',
+            data: {
+                id:idgudang
+            },
+            success: function(response){
+                var responseJSON = $.parseJSON(response);
+                ukuran_x = responseJSON.x
+                ukuran_y = responseJSON.y
+
+                var markup = "";
+                var count=0
+                var markup = "<table>";
+                var alpha = 'A';
+                for(let i=0;i<ukuran_y;i++){
+                    markup += "<tr>";
+                    for(let j=0;j<ukuran_x;j++){
+                        markup += "<td class='gridCells' id='"+count+"' onclick='btnRak("+count+")'>" + alpha + j + "</td>";
+                        count++;
+                    }
+                    markup += "</tr>";
+                    alpha = letters.increment(alpha);
+                }
+                markup += "</table>";
+                $("#grid").html(markup);
+
+                if(first_grid_width == 0){
+                    first_grid_width = 50*ukuran_x;
+                }
+
+                refreshBox();
+            }
+        });
+    }
+
+    function deleteGrup(name){
+        var idgudang = <?php echo $_GET['id']; ?>;
+        $.ajax({
+            url: 'sql/DeleteRak_db.php',
+            type: 'POST',
+            datatype: 'json',
+            data: {
+                id_gudang:idgudang,
+                nama_grup:name,
+                data_rak:JSON.stringify(data_grup_rak),
+            },success:function(response){
+                alert(response);
+                var responseJSON = $.parseJSON(response);
+                alert(responseJSON.message);
+                refreshGrid();
+                refreshListGrupRak();
+            },
+            error: function (jqXHR, exception) {
+                var msg = '';
+                if (jqXHR.status === 0) {
+                    msg = 'Not connect.\n Verify Network.';
+                } else if (jqXHR.status == 404) {
+                    msg = 'Requested page not found. [404]';
+                } else if (jqXHR.status == 500) {
+                    msg = 'Internal Server Error [500].';
+                } else if (exception === 'parsererror') {
+                    msg = 'Requested JSON parse failed.';
+                } else if (exception === 'timeout') {
+                    msg = 'Time out error.';
+                } else if (exception === 'abort') {
+                    msg = 'Ajax request aborted.';
+                } else {
+                    msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                }
+                $('#post').html(msg);
+            }
+        });
     }
 </script>
 </body>
