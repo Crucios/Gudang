@@ -1,3 +1,9 @@
+<?php
+    session_start();
+    if (($_SESSION["login"]) == false) {
+    header("Location: ../landingPage.php");
+    }
+?>
 <!DOCTYPE html>
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -160,10 +166,16 @@
                     alert("Nama grup tidak bisa lintasan")
                 }
                 else if($("#nama_grup").val()!=""){
-                    pilih_rak=true 
+                    pilih_rak=true;
                     $("#btn_tambahrak").show();
+                    $("#btn_pilihpintu").attr("disabled", true);
+                    $(".select_grup").attr("disabled", true);
+                    $(".delete_grup").attr("disabled", true); 
                     $("#nama_grup").attr("disabled", true);
                     $("#color").attr("disabled", true);
+                    $("#jmlh_level").attr("disabled", true);
+                    $("#btn_pilihlintasan").attr("disabled",true);
+                    $("#btn_save").attr("disabled", true);
                     $(this).attr("disabled", true); 
                     
                 }else{
@@ -178,6 +190,14 @@
                 // temp_select = true;
                 cek_tambahpintu = true;
                 $("#btn_tambahrak").show();
+                $("#btn_pilihrak").attr("disabled",true);
+                $("#btn_pilihlintasan").attr("disabled", true);
+                $(".select_grup").attr("disabled", true);
+                $(".delete_grup").attr("disabled", true); 
+                $("#nama_grup").attr("disabled", true);
+                $("#color").attr("disabled", true);
+                $("#jmlh_level").attr("disabled", true);
+                $("#btn_save").attr("disabled", true);
                 $(this).attr("disabled", true);
             });
 
@@ -186,7 +206,14 @@
                 // temp_select = true;
                 btn_lintasan_clicked=true;
                 $("#btn_tambahrak").show();
+                $("#btn_pilihpintu").attr("disabled", true);
+                $(".select_grup").attr("disabled", true);
+                $(".delete_grup").attr("disabled", true); 
+                $("#nama_grup").attr("disabled", true);
+                $("#color").attr("disabled", true);
+                $("#jmlh_level").attr("disabled", true);
                 $("#btn_pilihrak").attr("disabled",true);
+                $("#btn_save").attr("disabled", true);
                 $(this).attr("disabled", true);
             });
 
@@ -273,9 +300,6 @@
                             }
                         }
                         temp_select = false;
-                        $("#nama_grup").attr("disabled", false);
-                        $(".select_grup").attr("disabled", false);
-                        $(".delete_grup").attr("disabled", false); 
                     }else{
                         for (var i = 0; i < temprak.length; i++) {
                             number=temprak[i];
@@ -298,10 +322,17 @@
                     console.log(temp_data_to_query);
                     console.log(data_grup_rak);
 
+                    name_selected = "";
                     pilih_rak=false
-                    $("#color").attr("disabled", false);
-                    $("#btn_pilihrak").attr("disabled", false);
+                    $("#btn_pilihrak").attr("disabled",false);
+                    $("#btn_pilihlintasan").attr("disabled", false);
+                    $("#btn_pilihpintu").attr("disabled", false);
+                    $(".select_grup").attr("disabled", false);
+                    $(".delete_grup").attr("disabled", false); 
                     $("#nama_grup").attr("disabled", false);
+                    $("#color").attr("disabled", false);
+                    $("#jmlh_level").attr("disabled", false);
+                    $("#btn_save").attr("disabled", false);
                     $("#nama_grup").val("");
                     name_selected = "";
                     $("#jmlh_level").val("");
@@ -525,6 +556,10 @@
         $("#btn_pilihrak").attr("disabled",true);
         $(".select_grup").attr("disabled", true);
         $(".delete_grup").attr("disabled", true); 
+        $("#btn_pilihlintasan").attr("disabled", true);
+        $("#btn_save").attr("disabled", true);
+        $("#btn_pilihpintu").attr("disabled", true);
+        $("#jmlh_level").attr("disabled", true);
     }
 
     var letters = (function() {

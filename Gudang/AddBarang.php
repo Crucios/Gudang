@@ -1,3 +1,9 @@
+<?php
+    session_start();
+    if (($_SESSION["login"]) == false) {
+    header("Location: ../landingPage.php");
+    }
+?>
 <!DOCTYPE html>
     <head>
     <link rel="stylesheet" href="css/EditGudang.css">

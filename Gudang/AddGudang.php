@@ -1,3 +1,9 @@
+<?php
+    session_start();
+    if (($_SESSION["login"]) == false) {
+    header("Location: ../landingPage.php");
+    }
+?>
 <!DOCTYPE html>
     <head>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"

@@ -1,5 +1,4 @@
 <?php 
-
 require_once "../../php/connect.php";
 $output = array('success' => false, 'message' => null);
 $checkQuery = true;
