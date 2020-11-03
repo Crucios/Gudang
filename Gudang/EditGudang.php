@@ -89,6 +89,7 @@
                 var idgudang = <?php echo $_GET['id']; ?>;
                 if(data_grup_rak.length==0){
                     alert("Rak Belum Dipilih");
+                    window.location.href="AddBarang.php?id=" + idgudang;
                 // }else if(!cek_tambahlintassan){
                 //     alert("Lintasan belum di pilih")
                 // }else if(!cek_tambahpintu){
@@ -240,7 +241,7 @@
                             if(data_grup_rak[i].nama_grup == name_selected){
                                 var checkVal = true;
                                 var name = colorRak = "";
-                                console.log("PING COK");
+                                console.log("PING");
                                 loop2:
                                 for(var j = 0; j < data_grup_rak[i].koordinat.length; j++){
                                     loop3:
