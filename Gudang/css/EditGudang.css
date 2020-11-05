@@ -1,6 +1,10 @@
+body{
+    font-family:'Helvetica', 'Arial', sans-serif;
+}
+
 .container{
-    margin-top:30px;
-    padding: 50px 50px 50px;
+    margin: 0 auto;
+    padding: 0 50px;
     text-align: center;
 }
 
@@ -10,8 +14,45 @@
 }
 
 #box{
-    margin: auto;
+    margin: 50px auto 50px auto;
     padding: 0 50px;
-    max-height: 600px;    
+    max-height: 600px;
     overflow: auto;
+}
+.btn{
+    background-color: #513826;
+    color: #b89d64;
+    outline: none;
+}
+.btn:hover,.btn:active{
+    background-color: #b89d64;
+    color: #513826;
+}
+#btn_save{
+    background-color: #cc9a79;
+    color: #4e3c3c;
+
+}
+#btn_save:hover{
+    background-color: #ffc39a;
+    color: #000000;
+}
+.btn-back,.btn-back:active,.btn-back:hover{
+    background-color: rgba(0, 0, 0, 0);
+}
+.btn:disabled{
+    background-color: #000000;
+    color: #ffc39a;
+}
+#btn_tambahrak:hover,#btn_tambahrak:active{
+    background-color: #b89d64;
+    color: #513826;
+}
+#color{
+    width: 100%;
+    margin: 10px 0;
+    height: 30px;
+}
+#btn_pilihrak,#btn_pilihpintu,#btn_pilihlintasan,#btn_save{
+margin-left: 0;
 }

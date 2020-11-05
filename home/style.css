@@ -1,22 +1,18 @@
-#jumbotron {
+#jumbotron{
     background: linear-gradient(0deg, rgba(216,207,181,1) 0%, rgba(184,157,100,1) 100%);
-}
-.wrapper{
-    width: 70%;
-    margin: 0 auto;
 }
 #buttons{
     display: flex;
     justify-content: space-around;
 }
-.btn-primary{
-    display: flex;
+#addPage,#editButton,#viewButton,#deleteButton{
     background-color: #513826;
     color: #b89d64;
 }
-#adduser,#addPage,#editButton,#viewButton,#deleteButton{
+#adduser{
     background-color: #513826;
     color: #b89d64;
+    margin-right: 1%;
 }
 #editButton,#viewButton,#deleteButton{
     width: 80%;
@@ -24,6 +20,20 @@
 #search{
     height: 38px;
 }
+body{
+    font-family:'Helvetica', 'Arial', sans-serif;
+}
+.wrapper{
+    width: 70%;
+    margin: 0 auto;
+}
+
+.btn-primary{
+    display: flex;
+    background-color: #513826;
+    color: #b89d64;
+}
+
 .grid-container {
     display: grid;
     grid-template-columns: 80% 20%;
@@ -60,7 +70,6 @@
     width: 70%;
     margin: 10px 20px 10px 20px;
 }
-
 .namagud{
     width: 70%;
     margin: 10px 20px 10px 20px;

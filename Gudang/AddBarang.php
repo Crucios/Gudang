@@ -6,7 +6,8 @@
 ?>
 <!DOCTYPE html>
     <head>
-    <link rel="stylesheet" href="css/EditGudang.css">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <link rel="stylesheet" href="css/addBarang.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>   
@@ -16,10 +17,10 @@
            
     <body>
         <!-- jumbotron-->
-        <div class="jumbotron jumbotron-fluid" id="jumbotron" style="height: 300px; background-image: background-position: center; background-size: cover;">
+        <div class="jumbotron jumbotron-fluid" id="jumbotron" style="padding:0;height: 300px; background: linear-gradient(0deg, rgba(216,207,181,1) 0%, rgba(184,157,100,1) 100%);">
+        <a class="btn" id="back" style="margin:5% 0 0 5%;"><i class='fas fa-arrow-left' style='font-size:24px; '></i><b style="font-size:24px"> &nbsp;Back</b></a>
             <div class="container">
-                <h1 class="text1" style="text-align: center; font-family: NunitoBold;" onclick="home()">Storage Management</h1>
-                <p class="text2" style="text-align: center; font-family: fontCode;">Manage your storage, manage your world</p>
+                <h1 class="text1" style="text-align: center;" onclick="home()">Sistem Manajemen Gudang</h1>
             </div>
         </div>
             <!-- tabel list gudang-->
@@ -34,7 +35,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h3 class="modal-title" style="font-family: NunitoLight;" id="exampleModalLabel">Detail Rak</h3>
+                        <h3 class="modal-title id="exampleModalLabel">Detail Rak</h3>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -56,7 +57,10 @@
             
             refreshGrid();
             
-
+            $("#back").click(function(){
+                var idgud = <?php echo $_GET['id']; ?>;
+                window.location.href="EditGudang.php?id="+idgud;
+            });
             $( window ).resize(function() {
                 refreshBox();
             });
@@ -171,14 +175,14 @@
                     success:function(response){
                         response = $.parseJSON(response);
                         idRak = response.rak[0].id_rak;
-                        var markup = "<div><label style='font-family: NunitoLight;'>Nama Barang : " +response.rak[0].nama_barang+ "</label></div>";
+                        var markup = "<div><label>Nama Barang : " +response.rak[0].nama_barang+ "</label></div>";
                         for(var i=0; i<response.rak.length;i++){
-                            markup += "<div><label style='font-family: NunitoLight;'>Level " +response.rak[i].level+ "</label>";
-                            markup += "<label style='font-family: NunitoLight; margin-left:30px;'>Jumlah Sekarang : " +response.rak[i].kuantitas+ "</label></div>";
+                            markup += "<div><label >Level " +response.rak[i].level+ "</label>";
+                            markup += "<label style='margin-left:30px;'>Jumlah Sekarang : " +response.rak[i].kuantitas+ "</label></div>";
                         }
-                        markup += "<div><label style='font-family: NunitoLight;'>Jumlah barang yang ingin ditambahkan</label></div>";
+                        markup += "<div><label>Jumlah barang yang ingin ditambahkan</label></div>";
                         markup += "<div><input type='text' id='jumlah_barang' value=0 style='width: 100%; padding: 10px;'></div>";
-                        markup += "<div class='dropdown'><button type='button' class='btn btn-primary dropdown-toggle' data-toggle='dropdown'>Select Level</button>";
+                        markup += "<div class='dropdown' style='margin-top:20px;'><button type='button' class='btn btn-primary dropdown-toggle' data-toggle='dropdown'>Select Level</button>";
                         markup += "<div class='dropdown-menu' id='levelRak'>";
                         for(var i=0; i<response.rak.length;i++){
                             markup += "<a class='dropdown-item' href='#' value = "+response.rak[i].level+" >" +response.rak[i].level+"</a>";

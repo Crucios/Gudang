@@ -6,24 +6,24 @@
 ?>
 <!DOCTYPE html>
 <head>
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <link rel="stylesheet" href="css/EditGudang.css">
 <body>
     <!-- jumbotron-->
-    <div class="jumbotron jumbotron-fluid" id="jumbotron" style="height: 300px; background-image: background-position: center; background-size: cover;">
-        <div class="container">
-            <h1 class="text1" style="text-align: center; font-family: NunitoBold;" onclick="home()">Storage Management</h1>
-            <p class="text2" style="text-align: center; font-family: fontCode;">Manage your storage, manage your world</p>
+    <div class="jumbotron jumbotron-fluid" id="jumbotron" style="padding:0;height: 300px; background: linear-gradient(0deg, rgba(216,207,181,1) 0%, rgba(184,157,100,1) 100%);">
+        <a class="btn btn-back" id="back" style="margin:5% 0 0 5%;"><i class='fas fa-arrow-left' style='font-size:24px; '></i><b style="font-size:24px"> &nbsp;Back</b></a>
+            <div class="container">
+                <h1 class="text1" style="text-align: center;" onclick="home()">Sistem Manajemen Gudang</h1>
+            </div>
         </div>
-    </div>
 
     <!-- isi data rak -->
-    <table class="col-sm-8 offset-2" style="">
 
     <div class="container">        
-        <button class="btn btn-info col-sm-8 offset-2"  id="btn_pilihpintu">1. Pilih Pintu Masuk</button><br><br>
+        <button class="btn col-sm-8 offset-2"  id="btn_pilihpintu">1. Pilih Pintu Masuk</button><br><br>
         <table class="col-sm-8 offset-2" style="">
 
             <tr>
@@ -41,8 +41,8 @@
         </table>
         <br>
         
-        <button class="btn btn-info col-sm-8 offset-2"  id="btn_pilihrak">2. Pilih Rak</button><br><br>
-        <button class="btn btn-info col-sm-8 offset-2" id="btn_tambahrak" style="display:none;">Simpan</button>
+        <button class="btn col-sm-8 offset-2"  id="btn_pilihrak">2. Pilih Rak</button><br><br>
+        <button class="btn col-sm-8 offset-2" id="btn_tambahrak" style="display:none;margin:0">Simpan</button>
     </div>
     <datalist id="color_list">
         <option>#cb997e</option>
@@ -60,9 +60,10 @@
     <div class="container" id="listGrupRak">
     
     </div>
-
-    <button class="btn btn-info col-sm-8 offset-2" id="btn_pilihlintasan">3. Pilih Lintasan</button><br><br>
-    <button class="btn btn-primary col-sm-8 offset-2" id="btn_save">Simpan ke Database</button><br><br>
+    <div class="container">
+    <button class="btn col-sm-8 offset-2" id="btn_pilihlintasan">3. Pilih Lintasan</button><br><br>
+    <button class="btn col-sm-8 offset-2" id="btn_save">Simpan ke Database</button><br><br>
+    </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" href="js/EditGudang.js">
         var temp_data_grup_rak=[];
@@ -86,6 +87,9 @@
             refreshGrid();
             getListGrupRak();
 
+            $("#back").click(function(){
+                window.location.href="../home/homePage.php";
+            });
             $("#addPage").click(function(){
                 window.location.href="../php/AddGudang.php";
             });
@@ -652,8 +656,8 @@
         for (var i = 0; i < temp_data_grup_rak.length; i++) {
             if(temp_data_grup_rak[i].nama_grup.toLowerCase() != "pintu" && temp_data_grup_rak[i].nama_grup.toLowerCase() != "lintasan"){
                 var name = temp_data_grup_rak[i].nama_grup;
-                markup += '<div class="row">' +
-                '<p class="col-sm-4">' + name + '</p>' +
+                markup += '<div class="row">' + '<div class="col-sm-2"></div>' +
+                '<p class="col-sm-2">' + name + '</p>' +
                 '<button class="btn btn-info col-sm-2 select_grup" onClick="selectGrup(\'' + name + '\')">Select</button> &nbsp;&nbsp;&nbsp;' +
                 '<button class="btn btn-info col-sm-2 delete_grup" onClick="deleteGrup(\'' + name + '\')">Delete</button>' +
                 '</div> <br>';
