@@ -8,7 +8,7 @@ if (isset($_POST["user"]) && isset($_POST["password"])) {
 	$res = $cek->fetch_assoc();
 	if ($cek->num_rows == 0) {
 		echo "Username yang dimasukkan salah atau belum terdaftar!";
-	} elseif ($pass = $res["password"]) {
+	} elseif (password_verify($pass, $res["password"])) {
 		$_SESSION["login"] = true;
         $_SESSION["username"] = $res["username"];
 		$_SESSION["type"] = $res["type"];
