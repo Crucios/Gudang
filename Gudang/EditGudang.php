@@ -446,7 +446,7 @@
                             for(var j=0;j<rak.length;j++){
                                 var posisi_urutan = rak[j].posisi_urutan;
                                 $("#"+posisi_urutan).css({'background-color':colorRak});
-                                $("#"+posisi_urutan).html(nama_grup);
+                                // $("#"+posisi_urutan).html(nama_grup);
 
                                 var koor=[rak[j].koordinat_x, rak[j].koordinat_y];                    
                                 a.push(koor);
@@ -507,7 +507,7 @@
                 var id_kolom="#"+number
                 $(id_kolom).css({'background-color': warna})        
             }
-
+            refreshBox();
         }
     }  
 
@@ -652,16 +652,22 @@
 
     function refreshListGrupRak(){
         console.log(data_grup_rak);
+        var length = temp_data_grup_rak.length;
         var markup = "";
-        for (var i = 0; i < temp_data_grup_rak.length; i++) {
-            if(temp_data_grup_rak[i].nama_grup.toLowerCase() != "pintu" && temp_data_grup_rak[i].nama_grup.toLowerCase() != "lintasan"){
+        for (var i = 0; i < length; i++) {
+            
                 var name = temp_data_grup_rak[i].nama_grup;
+                var color = temp_data_grup_rak[i].color;
                 markup += '<div class="row">' + '<div class="col-sm-2"></div>' +
                 '<p class="col-sm-2">' + name + '</p>' +
-                '<button class="btn btn-info col-sm-2 select_grup" onClick="selectGrup(\'' + name + '\')">Select</button> &nbsp;&nbsp;&nbsp;' +
-                '<button class="btn btn-info col-sm-2 delete_grup" onClick="deleteGrup(\'' + name + '\')">Delete</button>' +
-                '</div> <br>';
-            }
+                '<input type="color" value="'+ color +'" list="color_list" disabled> &nbsp;&nbsp;';
+
+                if(temp_data_grup_rak[i].nama_grup.toLowerCase() != "pintu" && temp_data_grup_rak[i].nama_grup.toLowerCase() != "lintasan"){
+                    markup += '<button class="btn btn-info col-sm-2 select_grup" onClick="selectGrup(\'' + name + '\')">Select</button> &nbsp;&nbsp;&nbsp;' +
+                '<button class="btn btn-info col-sm-2 delete_grup" onClick="deleteGrup(\'' + name + '\')">Delete</button>';
+                }
+                markup += '</div><br>';
+                
         }  
         $("#listGrupRak").html(markup);
     }
