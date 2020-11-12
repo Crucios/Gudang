@@ -6,16 +6,16 @@
 ?>
 <!DOCTYPE html>
     <head>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     </head>
-        <link rel="stylesheet" href="css/EditGudang.css">
+        <link rel="stylesheet" href="css/viewGudang.css">
     <body>
         <!-- jumbotron-->
-        <div class="jumbotron jumbotron-fluid" id="jumbotron" style="height: 300px; background-image: background-position: center; background-size: cover;">
+        <div class="jumbotron jumbotron-fluid" id="jumbotron" style="padding:0;height: 300px; background: linear-gradient(0deg, rgba(216,207,181,1) 0%, rgba(184,157,100,1) 100%);">
+        <a class="btn" id="back" style="margin:5% 0 0 5%;"><i class='fas fa-arrow-left' style='font-size:24px; '></i><b style="font-size:24px"> &nbsp;Back</b></a>
             <div class="container">
-                <h1 class="text1" style="text-align: center; font-family: NunitoBold;" onclick="home()">Storage Management</h1>
-                <p class="text2" style="text-align: center; font-family: fontCode;">Manage your storage, manage your world</p>
+                <h1 class="text1" style="text-align: center;" onclick="home()">Sistem Manajemen Gudang</h1>
             </div>
         </div>
             <!-- tabel list gudang-->
@@ -27,6 +27,9 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script type="text/javascript">
         $(document).ready(function(){
+            $("#back").click(function(){
+                window.location.href="../home/homePage.php";
+            });
             var first_grid_width = 0;
             refreshGrid();
             $("#addPage").click(function(){
@@ -64,7 +67,7 @@
                         var nama = responseJSON.nama;
                         
                         var markup = "";
-                        $("#name").html("<div class='title'><h2 style='text-align:center; margin-bottom:50px;'>" + nama + "</h2></div>");
+                        $("#name").html("<div class='title'><h2 style='text-align:center; margin-bottom:50px;'>Nama Gudang : " + nama + "</h2></div>");
                         markup += "<table>";
                         var count = 0;
                         for(let i=0;i<ukuran_y;i++){
@@ -120,6 +123,9 @@
         function home(){
             window.location.href = "../Home/homePage.php";
         }
+        setTimeout(() => {
+            
+        }, timeout);
     </script>
     </body>
 </html>

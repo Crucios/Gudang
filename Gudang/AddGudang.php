@@ -13,11 +13,11 @@
     <body>
         <!-- tabel list gudang-->
         <div style="margin-top:30px;">
-            <div class="card" style ="width:40%; margin:0 auto;">
+            <div class="card" style ="width:40%; margin:10% auto;">
                 <div class="card-body">
                     <form>
                         <h5 class="card-title">Tambah Gudang Baru</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Isi setiap kolom dengan lengkap dan benar</h6>
+                        <h6 class="card-subtitle mb-2 text-muted" style="margin-bottom:20px;">Isi setiap kolom dengan lengkap dan benar</h6>
 
                         <!-- Input Nama Gudang -->
                         <div class="input-group mb-3" style="margin-bottom:20px;">
@@ -51,8 +51,8 @@
                             <input type="number" id="ukuran_y_input" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
                         </div>
 
-                        <button type="button" class="btn btn-primary" id="submitGudang">Next</button>
-                        <a href="../Home/homePage.php" class="card-link">Cancel</a>
+                        <button type="button" class="btn" id="submitGudang">Next</button>
+                        <a href="../Home/homePage.php" class="card-link" style="color:#b89d64">Cancel</a>
                     </form>
                 </div>
             </div>

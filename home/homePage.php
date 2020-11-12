@@ -17,13 +17,16 @@
     <!-- jumbotron-->
     <div class="jumbotron jumbotron-fluid" id="jumbotron" style="height: 200px;">
         <div class="container">
-            <h2 class="text1" style="text-align: center; font-family: NunitoBold;">Sistem Manajemen Gudang</h2>
-            <p class="text2" style="text-align: center; font-family: fontCode;"></p>
+            <h2 class="text1" style="text-align: center; ">Sistem Manajemen Gudang</h2>
+            <p class="text2" style="text-align: center; "></p>
         </div>
-        <p style="float:right; margin-right:20px;" id="logoutButton">Logout</p>
+        <!--<p style="float:right; margin-right:20px;" id="logoutButton">Logout</p>-->
     </div>
 
     <div class="wrapper">
+        <div class="row">   
+            <p class="btn" id="logoutButton" style="font-size : 20pt; width:min-content; margin: auto 10% 2% auto">Logout</p>
+        </div>
         <div class="row">
             <div class="col-sm-8">
                 <h1 style="margin-left:10%;">List Gudang</h1>
@@ -48,21 +51,21 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h3 class="modal-title" style="font-family: NunitoLight;" id="exampleModalLabel">Add User</h3>
+                        <h3 class="modal-title" id="exampleModalLabel">Add User</h3>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <label style="font-family: NunitoLight;">Username : </label>
-                        <input type="text" name="username" id="a_user" placeholder="Masukkan username anda.." style="width: 100%; padding: 10px; font-family: NunitoLight;">
-                        <label style="margin-top: 10px; font-family: NunitoLight;">Password : </label>
-                        <input type="password" name="password" id="a_password" placeholder="Masukkan password anda.." style="width: 100%; padding: 10px; font-family: NunitoLight;">
-                        <label style="margin-top: 10px; font-family: NunitoLight;">Email : </label>
-                        <input type="email" name="email" id="a_email" placeholder="Masukkan email anda.." style="width: 100%; padding: 10px; font-family: NunitoLight;">
+                        <label>Username : </label>
+                        <input type="text" name="username" id="a_user" placeholder="Masukkan username anda.." style="width: 100%; padding: 10px;">
+                        <label style="margin-top: 10px;">Password : </label>
+                        <input type="password" name="password" id="a_password" placeholder="Masukkan password anda.." style="width: 100%; padding: 10px;">
+                        <label style="margin-top: 10px;">Email : </label>
+                        <input type="email" name="email" id="a_email" placeholder="Masukkan email anda.." style="width: 100%; padding: 10px;">
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn" onclick = "confirmButton()" style="color: white; background-color: #141f3d;">Confirm</button>
+                        <button type="button" class="btn" onclick = "confirmButton()" style="color: #b89d64; background-color: #513826;">Confirm</button>
                     </div>
                 </div>
             </div>
@@ -138,8 +141,8 @@
     function addUserButton(){
         var type = <?php echo $_SESSION["type"]; ?> ;
         if(type == 0) {
-            var add = "<button type='button' class='btn btn-primary' id='adduser' onclick='addUser()'>Add User</button>";
-            add += "<button type='button' class='btn btn-primary' id='addPage'>Add Gudang</button>";
+            var add = "<button type='button' class='btn' id='adduser' onclick='addUser()' style='margin-right:10px;'>Add User</button>";
+            add += "<button type='button' class='btn' id='addPage'>Add Gudang</button>";
             $("#buttons").html(add);    
         }
     }

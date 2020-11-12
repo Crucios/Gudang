@@ -15,15 +15,24 @@ if (isset($_POST["user"]) && isset($_POST["password"]) && isset($_POST["email"])
         
     }
     else {
-        $query = mysqli_query($con, "INSERT INTO user (username, password, email, type) VALUES('$user', '$pass', '$email', 1)");
-        if($query){
-            $output['message'] = "User berhasil ditambahkan!";
-            $output["success"] = true;
-        }
-        else {
-            $output['message'] = "User gagal ditambahkan!";
-            $output["success"] = false;
-        }
+        if(empty(trim($_POST["password"]))){
+            $output['message']="Password masih kosong";
+        }elseif(strlen(trim($_POST["password"]))<6){
+            $output['message']="Password minimal 6 karakter";
+        }elseif(preg_match("[ ]", $_POST["password"])){
+            $output['message']="Password tidak bisa mengandung spasi";
+        }else{
+            $pass = password_hash($pass, PASSWORD_DEFAULT);
+            $query = mysqli_query($con, "INSERT INTO user (username, password, email, type) VALUES('$user', '$pass', '$email', 1)");
+            if($query){
+                $output['message'] = "User berhasil ditambahkan!";
+                $output["success"] = true;
+            }
+            else {
+                $output['message'] = "User gagal ditambahkan!";
+                $output["success"] = false;
+            }
+        }        
     }
 
     echo json_encode($output);

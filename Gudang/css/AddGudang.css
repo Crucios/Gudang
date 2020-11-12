@@ -1,11 +1,16 @@
 body {
-    background-color: powderblue;
+    font-family:'Helvetica', 'Arial', sans-serif;
+    background: #d8cfb5;
 }
-
 .card-title{
     text-align: center;
 }
 
 .card-subtitle{
     text-align: center;
+}
+#submitGudang{
+    margin-right: 2%;
+    background-color: #513826;
+    color: #b89d64;
 }
