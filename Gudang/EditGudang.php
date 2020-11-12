@@ -165,7 +165,7 @@
                 }else if(input_nama_grup=="LINTASAN"){
                     alert("Nama grup tidak bisa lintasan")
                 }
-                else if($("#nama_grup").val()!=""){
+                else if($("#nama_grup").val()!="" && $("#jmlh_level").val()!=""){
                     pilih_rak=true;
                     $("#btn_tambahrak").show();
                     $("#btn_pilihpintu").attr("disabled", true);
@@ -179,7 +179,7 @@
                     $(this).attr("disabled", true); 
                     
                 }else{
-                    alert("Nama grup rak masih kosong")
+                    alert("Nama grup rak atau level masih kosong")
                 }
 
 
