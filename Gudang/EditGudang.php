@@ -1,8 +1,8 @@
 <?php
-    session_start();
-    if (($_SESSION["login"]) == false) {
+session_start();
+if (($_SESSION["login"]) == false) {
     header("Location: ../landingPage.php");
-    }
+}
 ?>
 <!DOCTYPE html>
 <head>
@@ -15,10 +15,10 @@
     <!-- jumbotron-->
     <div class="jumbotron jumbotron-fluid" id="jumbotron" style="padding:0;height: 300px; background: linear-gradient(0deg, rgba(216,207,181,1) 0%, rgba(184,157,100,1) 100%);">
         <a class="btn btn-back" id="back" style="margin:5% 0 0 5%;"><i class='fas fa-arrow-left' style='font-size:24px; '></i><b style="font-size:24px"> &nbsp;Back</b></a>
-            <div class="container">
-                <h1 class="text1" style="text-align: center;" onclick="home()">Sistem Manajemen Gudang</h1>
-            </div>
+        <div class="container">
+            <h1 class="text1" style="text-align: center;" onclick="home()">Sistem Manajemen Gudang</h1>
         </div>
+    </div>
 
     <!-- isi data rak -->
 
@@ -58,11 +58,11 @@
         <div id="grid"></div>
     </div><br><br>
     <div class="container" id="listGrupRak">
-    
+
     </div>
     <div class="container">
-    <button class="btn col-sm-8 offset-2" id="btn_pilihlintasan">3. Pilih Lintasan</button><br><br>
-    <button class="btn col-sm-8 offset-2" id="btn_save">Simpan ke Database</button><br><br>
+        <button class="btn col-sm-8 offset-2" id="btn_pilihlintasan">3. Pilih Lintasan</button><br><br>
+        <button class="btn col-sm-8 offset-2" id="btn_save">Simpan ke Database</button><br><br>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" href="js/EditGudang.js">
@@ -76,7 +76,7 @@
         var cek_tambahpintu=false;
         var cek_tambahlintassan=false;
         var btn_lintasan_clicked=false;
-        
+        var cek_delete_rak=false;
         // for select in table
         var temp_select = false;
         var name_selected = "";
@@ -104,9 +104,9 @@
                 //     alert("Lintasan belum di pilih")
                 // }else if(!cek_tambahpintu){
                 //     alert("Pintu belum di pilih")
-                }else if(temprak.length>0){
-                    alert("Rak yang dipilih belum tersimpan")
-                }else{
+            }else if(temprak.length>0){
+                alert("Rak yang dipilih belum tersimpan")
+            }else{
                     //var idgudang = <?php echo $_GET['id']; ?>;
                     console.log(JSON.stringify(data_grup_rak));
                     $.ajax({
@@ -175,6 +175,7 @@
                     $("#btn_pilihpintu").attr("disabled", true);
                     $(".select_grup").attr("disabled", true);
                     $(".delete_grup").attr("disabled", true); 
+                    $(".delete_rak").attr("disabled", true); 
                     $("#nama_grup").attr("disabled", true);
                     $("#color").attr("disabled", true);
                     $("#jmlh_level").attr("disabled", true);
@@ -198,6 +199,7 @@
                 $("#btn_pilihlintasan").attr("disabled", true);
                 $(".select_grup").attr("disabled", true);
                 $(".delete_grup").attr("disabled", true); 
+                $(".delete_rak").attr("disabled", true); 
                 $("#nama_grup").attr("disabled", true);
                 $("#color").attr("disabled", true);
                 $("#jmlh_level").attr("disabled", true);
@@ -213,6 +215,7 @@
                 $("#btn_pilihpintu").attr("disabled", true);
                 $(".select_grup").attr("disabled", true);
                 $(".delete_grup").attr("disabled", true); 
+                $(".delete_rak").attr("disabled", true); 
                 $("#nama_grup").attr("disabled", true);
                 $("#color").attr("disabled", true);
                 $("#jmlh_level").attr("disabled", true);
@@ -333,6 +336,7 @@
                     $("#btn_pilihpintu").attr("disabled", false);
                     $(".select_grup").attr("disabled", false);
                     $(".delete_grup").attr("disabled", false); 
+                    $(".delete_rak").attr("disabled", false); 
                     $("#nama_grup").attr("disabled", false);
                     $("#color").attr("disabled", false);
                     $("#jmlh_level").attr("disabled", false);
@@ -346,99 +350,99 @@
                 }
             });
 
-            var letters = (function() {
-                var pub = {};
-                var letterArray = [];
-                
-                pub.increment = function (c) {
-                    letterArray = c.split("");
-                    
-                    if(isLetters(letterArray)){
-                        return(next(c));
-                    } else {
-                        throw new Error('Letters Only');
-                    }                
-                };
-                
-                function isLetters(arr) {
-                    for (var i = 0; i < arr.length; i++) {
-                        if(arr[i].toLowerCase() != arr[i].toUpperCase()){
-                        } else {
-                            return false;
-                        }
-                    }
-                    return true;
-                }            
-                
-                function next(c) {
-                    var u = c.toUpperCase();
-                    if (same(u,'Z')){
-                        var txt = '';
-                        var i = u.length;
-                        while (i--) {
-                            txt += 'A';
-                        }
-                        return (txt+'A');
-                    } else {
-                        var p = "";
-                        var q = "";
-                        if(u.length > 1){
-                            p = u.substring(0, u.length - 1);
-                            q = String.fromCharCode(p.slice(-1).charCodeAt(0));
-                        }
-                        var l = u.slice(-1).charCodeAt(0);
-                        var z = nextLetter(l);
-                        if(z==='A'){
-                            return p.slice(0,-1) + nextLetter(q.slice(-1).charCodeAt(0)) + z;
-                        } else {
-                            return p + z;
-                        }
-                    }
-                }
+var letters = (function() {
+    var pub = {};
+    var letterArray = [];
+
+    pub.increment = function (c) {
+        letterArray = c.split("");
+
+        if(isLetters(letterArray)){
+            return(next(c));
+        } else {
+            throw new Error('Letters Only');
+        }                
+    };
+
+    function isLetters(arr) {
+        for (var i = 0; i < arr.length; i++) {
+            if(arr[i].toLowerCase() != arr[i].toUpperCase()){
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }            
+
+    function next(c) {
+        var u = c.toUpperCase();
+        if (same(u,'Z')){
+            var txt = '';
+            var i = u.length;
+            while (i--) {
+                txt += 'A';
+            }
+            return (txt+'A');
+        } else {
+            var p = "";
+            var q = "";
+            if(u.length > 1){
+                p = u.substring(0, u.length - 1);
+                q = String.fromCharCode(p.slice(-1).charCodeAt(0));
+            }
+            var l = u.slice(-1).charCodeAt(0);
+            var z = nextLetter(l);
+            if(z==='A'){
+                return p.slice(0,-1) + nextLetter(q.slice(-1).charCodeAt(0)) + z;
+            } else {
+                return p + z;
+            }
+        }
+    }
     
-                function nextLetter(l){
-                    if(l<90){
-                        return String.fromCharCode(l + 1);
-                    }
-                    else{
-                        return 'A';
-                    }
-                }
-                
-                function same(str,char){
-                    var i = str.length;
-                    while (i--) {
-                        if (str[i]!==char){
-                            return false;
-                        }
-                    }
-                    return true;
-                }
-                
+    function nextLetter(l){
+        if(l<90){
+            return String.fromCharCode(l + 1);
+        }
+        else{
+            return 'A';
+        }
+    }
+
+    function same(str,char){
+        var i = str.length;
+        while (i--) {
+            if (str[i]!==char){
+                return false;
+            }
+        }
+        return true;
+    }
+
                 //API
                 return pub;
             }());
 
-            function getListGrupRak(){
-                var idgudang = <?php echo $_GET['id']; ?>;
-                
-                $.ajax({
-                    url:'sql/GetRak_db.php',
-                    type:'GET',
-                    datatype:'json',
-                    data:{
-                        id_gudang:idgudang
-                    },
-                    success:function(response){
-                        response = $.parseJSON(response);
-                        console.log(response);
-                        for(var i=0;i<response.grup_rak.length;i++){
-                            var grup_rak=response.grup_rak[i];
+function getListGrupRak(){
+    var idgudang = <?php echo $_GET['id']; ?>;
 
-                            var nama_grup=grup_rak.nama_grup;
-                            var colorRak=grup_rak.color;
+    $.ajax({
+        url:'sql/GetRak_db.php',
+        type:'GET',
+        datatype:'json',
+        data:{
+            id_gudang:idgudang
+        },
+        success:function(response){
+            response = $.parseJSON(response);
+            console.log(response);
+            for(var i=0;i<response.grup_rak.length;i++){
+                var grup_rak=response.grup_rak[i];
 
-                            var rak=response.rak[i];
+                var nama_grup=grup_rak.nama_grup;
+                var colorRak=grup_rak.color;
+
+                var rak=response.rak[i];
 
                             //tiap kolom grup_rak
                             var b = [];
@@ -470,27 +474,16 @@
                         refreshListGrupRak();
                     }
                 })
-            }
-        });
-        
-    function home(){
-        window.location.href = "../Home/homePage.php";
-    }
+}
+});
+
+function home(){
+    window.location.href = "../Home/homePage.php";
+}
 
 
-    function numbertoAlpha(num){
-        var s = '', t;
-
-        while (num > 0) {
-            t = (num - 1) % 26;
-            s = String.fromCharCode(65 + t) + s;
-            num = (num - t)/26 | 0;
-        }
-        return s || undefined;
-    }
-
-    function btnRak(number){    
-        if(pilih_rak){
+function btnRak(number){    
+    if(pilih_rak){
             // cek sudah terisi atau belum
             var checkSelected=false;
             loop1:
@@ -508,6 +501,58 @@
                 $(id_kolom).css({'background-color': warna})        
             }
             refreshBox();
+        }
+        if(cek_delete_rak){
+            loop1:
+            for(var i=0;i<data_grup_rak.length;i++){
+                for(var j=0;j<data_grup_rak[i].value.length;j++){
+                    if(data_grup_rak[i].value[j]==number && data_grup_rak[i].nama_grup==name_selected){
+
+                        var konfirmasi=confirm("Apakah anda yakin ingin menghapus rak "+name_selected+" di lokasi "+ $("#"+number).text()+"?")
+                        if(konfirmasi){
+                            var idgudang = <?php echo $_GET['id']; ?>;                            
+                            $.ajax({
+                                url: 'sql/delete_one_rak_db.php',
+                                type: 'POST',
+                                datatype: 'json',
+                                data: {
+                                    id_gudang:idgudang,
+                                    nomor_rak:number,
+                                    nama_grup:name_selected
+                                },success:function(response){
+                                    var responseJSON = $.parseJSON(response);
+                                    
+                                    location.reload();    
+                                    
+                                    alert(responseJSON.message);
+                                    
+                                    
+                                },
+                                error: function (jqXHR, exception) {
+                                    var msg = '';
+                                    if (jqXHR.status === 0) {
+                                        msg = 'Not connect.\n Verify Network.';
+                                    } else if (jqXHR.status == 404) {
+                                        msg = 'Requested page not found. [404]';
+                                    } else if (jqXHR.status == 500) {
+                                        msg = 'Internal Server Error [500].';
+                                    } else if (exception === 'parsererror') {
+                                        msg = 'Requested JSON parse failed.';
+                                    } else if (exception === 'timeout') {
+                                        msg = 'Time out error.';
+                                    } else if (exception === 'abort') {
+                                        msg = 'Ajax request aborted.';
+                                    } else {
+                                        msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                                    }
+                                    $('#post').html(msg);
+                                }
+                            });
+                        }
+                        
+                    }
+                }
+            }
         }
     }  
 
@@ -649,25 +694,40 @@
         var cw = $('.gridCells').outerWidth();
         $('.gridCells').css({'height':cw+'px'});
     }
-
+    function deleteRak(name){
+        cek_delete_rak =true;
+        name_selected = name;
+        $("#btn_tambahrak").show();
+        $("#nama_grup").attr("disabled", true);
+        $("#color").attr("disabled", true);
+        $("#btn_pilihrak").attr("disabled",true);
+        $(".select_grup").attr("disabled", true);
+        $(".delete_grup").attr("disabled", true); 
+        $(".delete_rak").attr("disabled", true); 
+        $("#btn_pilihlintasan").attr("disabled", true);
+        $("#btn_save").attr("disabled", true);
+        $("#btn_pilihpintu").attr("disabled", true);
+        $("#jmlh_level").attr("disabled", true);
+    }
     function refreshListGrupRak(){
         console.log(data_grup_rak);
         var length = temp_data_grup_rak.length;
         var markup = "";
         for (var i = 0; i < length; i++) {
-            
-                var name = temp_data_grup_rak[i].nama_grup;
-                var color = temp_data_grup_rak[i].color;
-                markup += '<div class="row">' + '<div class="col-sm-2"></div>' +
-                '<p class="col-sm-2">' + name + '</p>' +
-                '<input type="color" value="'+ color +'" list="color_list" disabled> &nbsp;&nbsp;';
 
-                if(temp_data_grup_rak[i].nama_grup.toLowerCase() != "pintu" && temp_data_grup_rak[i].nama_grup.toLowerCase() != "lintasan"){
-                    markup += '<button class="btn btn-info col-sm-2 select_grup" onClick="selectGrup(\'' + name + '\')">Select</button> &nbsp;&nbsp;&nbsp;' +
-                '<button class="btn btn-info col-sm-2 delete_grup" onClick="deleteGrup(\'' + name + '\')">Delete</button>';
-                }
-                markup += '</div><br>';
-                
+            var name = temp_data_grup_rak[i].nama_grup;
+            var color = temp_data_grup_rak[i].color;
+            markup += '<div class="row">' + '<div class="col-sm-2"></div>' +
+            '<p class="col-sm-2">' + name + '</p>' +
+            '<input type="color" value="'+ color +'" list="color_list" disabled> &nbsp;&nbsp;';
+
+            if(temp_data_grup_rak[i].nama_grup.toLowerCase() != "pintu" && temp_data_grup_rak[i].nama_grup.toLowerCase() != "lintasan"){
+                markup += '<button class="btn btn-info col-sm-2 select_grup" onClick="selectGrup(\'' + name + '\')">Select</button> &nbsp;&nbsp;&nbsp;' +
+                '<button class="btn btn-info col-sm-2 delete_rak" onClick="deleteRak(\'' + name + '\')">Delete Rak</button>  &nbsp;&nbsp;&nbsp'+
+                '<button class="btn btn-info col-sm-2 delete_grup" onClick="deleteGrup(\'' + name + '\')">Delete All</button>;';
+            }
+            markup += '</div><br>';
+
         }  
         $("#listGrupRak").html(markup);
     }
@@ -722,7 +782,6 @@
                 nama_grup:name,
                 data_rak:JSON.stringify(data_grup_rak),
             },success:function(response){
-                alert(response);
                 var responseJSON = $.parseJSON(response);
                 alert(responseJSON.message);
                 refreshGrid();
