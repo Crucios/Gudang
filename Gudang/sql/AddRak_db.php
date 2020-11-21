@@ -54,14 +54,15 @@ if($_POST){
 						$checkQuery = false;
 					}
 				}
-				$get_rak= "SELECT id_rak FROM rak WHERE id_gruprak = $id_grup_rak";
-				$res = $con->query($get_rak);
-				while($row=$res->fetch_assoc()){
-					$temp_idrak = $row["id_rak"];
-					for($x=0;$x<$level;$x++){
-						$generate_barang=mysqli_query($con, "INSERT INTO barang(id_barang,nama_barang,id_rak,level) VALUES(0, '$nama_grup', $temp_idrak, $x+1)");
-					}
-				}
+				
+				// $get_rak= "SELECT id_rak FROM rak WHERE id_gruprak = $id_grup_rak";
+				// $res = $con->query($get_rak);
+				// while($row=$res->fetch_assoc()){
+				// 	$temp_idrak = $row["id_rak"];
+				// 	for($x=0;$x<$level;$x++){
+				// 		$generate_barang=mysqli_query($con, "INSERT INTO barang(id_barang,nama_barang,id_rak,level) VALUES(0, '$nama_grup', $temp_idrak, $x+1)");
+				// 	}
+				// }
 			}
 			
 			

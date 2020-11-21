@@ -30,12 +30,15 @@
                 <div id="grid"></div>
             </div>
         </div>
+        <div class="container" id="listGrupRak">
+    
+        </div>
 
         <div class="modal fade" id="addBarangModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h3 class="modal-title id="exampleModalLabel">Detail Rak</h3>
+                        <h3 class="modal-title" id="labelModal"></h3>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -56,7 +59,8 @@
         $(document).ready(function(){
             
             refreshGrid();
-            
+            refreshBox();
+            getListGrupRak();
             $("#back").click(function(){
                 var idgud = <?php echo $_GET['id']; ?>;
                 window.location.href="EditGudang.php?id="+idgud;
@@ -76,7 +80,80 @@
                 $('.gridCells').css({'height':cw+'px'});
             }
 
-            
+            function getListGrupRak(){
+                var idgudang = <?php echo $_GET['id']; ?>;
+                
+                $.ajax({
+                    url:'sql/GetRak_db.php',
+                    type:'GET',
+                    datatype:'json',
+                    data:{
+                        id_gudang:idgudang
+                    },
+                    success:function(response){
+                        response = $.parseJSON(response);
+                        console.log(response);
+                        for(var i=0;i<response.grup_rak.length;i++){
+                            var grup_rak=response.grup_rak[i];
+
+                            var nama_grup=grup_rak.nama_grup;
+                            var colorRak=grup_rak.color;
+
+                            var rak=response.rak[i];
+
+                            //tiap kolom grup_rak
+                            var b = [];
+                            var a = [];
+                            for(var j=0;j<rak.length;j++){
+                                var posisi_urutan = rak[j].posisi_urutan;
+                                $("#"+posisi_urutan).css({'background-color':colorRak});
+                                // $("#"+posisi_urutan).html(nama_grup);
+
+                                var koor=[rak[j].koordinat_x, rak[j].koordinat_y];                    
+                                a.push(koor);
+                                b.push(posisi_urutan);
+                            }
+                            
+                            temp_data_grup_rak.push({
+                                nama_grup: nama_grup,
+                                koordinat:a,
+                                value:b,
+                                color:colorRak
+                            });
+
+                            data_grup_rak.push({
+                                nama_grup: nama_grup,
+                                koordinat:a,
+                                value:b,
+                                color:colorRak
+                            });
+                        }
+                        refreshListGrupRak();
+                    }
+                })
+            }
+
+            function refreshListGrupRak(){
+                console.log(data_grup_rak);
+                var length = temp_data_grup_rak.length;
+                var markup = "";
+                for (var i = 0; i < length; i++) {
+                    
+                        var name = temp_data_grup_rak[i].nama_grup;
+                        var color = temp_data_grup_rak[i].color;
+                        markup += '<div class="row">' + '<div class="col-sm-2"></div>' +
+                        '<p class="col-sm-2">' + name + '</p>' +
+                        '<input type="color" value="'+ color +'" list="color_list" disabled> &nbsp;&nbsp;';
+
+                        if(temp_data_grup_rak[i].nama_grup.toLowerCase() != "pintu" && temp_data_grup_rak[i].nama_grup.toLowerCase() != "lintasan"){
+                            markup += '<button class="btn btn-info col-sm-2 select_grup" onClick="selectGrup(\'' + name + '\')">Select</button> &nbsp;&nbsp;&nbsp;' +
+                        '<button class="btn btn-info col-sm-2 delete_grup" onClick="deleteGrup(\'' + name + '\')">Delete</button>';
+                        }
+                        markup += '</div><br>';
+                        
+                }  
+                $("#listGrupRak").html(markup);
+            }
 
             function refreshGrid(){
                 var idgudang = <?php echo $_GET['id']; ?>;
@@ -165,6 +242,7 @@
         }
 
         function showModal(id_rak){
+            console.log(id_rak);
             $.ajax({
                     url:'sql/GetBarang_db.php',
                     type:'GET',
@@ -173,36 +251,75 @@
                         id_rak:id_rak
                     },
                     success:function(response){
+                        console.log(response);
                         response = $.parseJSON(response);
-                        idRak = response.rak[0].id_rak;
-                        var markup = "<div><label>Nama Barang : " +response.rak[0].nama_barang+ "</label></div>";
-                        for(var i=0; i<response.rak.length;i++){
-                            markup += "<div><label >Level " +response.rak[i].level+ "</label>";
-                            markup += "<label style='margin-left:30px;'>Jumlah Sekarang : " +response.rak[i].kuantitas+ "</label></div>";
+                        console.log(response.jumlah_level);
+                        if(response.message == "Gagal"){
+                            var markup = "<div><label>Rak masih kosong! Silahkan masukkan barang</label></div>";
+                            markup += "<div><label>Nama barang yang ingin ditambahkan</label></div>";
+                            markup += "<div><input type='text' id='nama_barang' placeholder='Nama Barang' style='width: 100%; padding: 10px;'></div>";
+                            markup += "<div><label>Jumlah barang yang ingin ditambahkan</label></div>";
+                            markup += "<div><input type='text' id='jumlah_barang' value=0 style='width: 100%; padding: 10px;'></div>";
+                            markup += "<div class='dropdown' style='margin-top:20px;'><button type='button' class='btn btn-primary dropdown-toggle' data-toggle='dropdown'>Select Level</button>";
+                            markup += "<div class='dropdown-menu' id='levelRak'>";
+                            for(var i=0; i<response.jumlah_level;i++){
+                                markup += "<a class='dropdown-item' href='#' value = "+(i+1)+" >" +(i+1)+"</a>";
+                            }
+                            markup += "</div></div>";
+                            
+                            var markup2 = "<button type='button' class='btn' onclick = 'confirmButton("+id_rak+")' style='color: white; background-color: #141f3d;'>Confirm</button>";
+                            $("#labelModal").html("Detail Rak " + response.nama_grup);
+                            $("#addBarang").html(markup);
+                            $("#footer_add").html(markup2);
+                            $(".dropdown-item").click(function(){
+                                selectedLevel = $(this).text();
+                                $(".dropdown-toggle").html("Level " + selectedLevel);
+                            })
+                            $('#addBarangModal').modal('show');
                         }
-                        markup += "<div><label>Jumlah barang yang ingin ditambahkan</label></div>";
-                        markup += "<div><input type='text' id='jumlah_barang' value=0 style='width: 100%; padding: 10px;'></div>";
-                        markup += "<div class='dropdown' style='margin-top:20px;'><button type='button' class='btn btn-primary dropdown-toggle' data-toggle='dropdown'>Select Level</button>";
-                        markup += "<div class='dropdown-menu' id='levelRak'>";
-                        for(var i=0; i<response.rak.length;i++){
-                            markup += "<a class='dropdown-item' href='#' value = "+response.rak[i].level+" >" +response.rak[i].level+"</a>";
+                        else if(response.message == "Berhasil") {
+                            console.log(response.rak);
+                            idRak = response.rak[0].id_rak;
+                            var markup = "<div id=\"modalOverflow\">";
+                            for(var i=0; i<response.rak.length;i++){
+                                markup += "<div><label>" + (i+1) + "</label>"
+                                markup += "<label style='margin-left:10px;'>Nama Barang : " +response.rak[i].nama_barang+ "</label></div>";
+                                markup += "<div><label style='margin-left:30px;'>Level " +response.rak[i].level+ "</label></div>";
+                                markup += "<div><label style='margin-left:30px;'>Jumlah Sekarang : " +response.rak[i].kuantitas+ "</label></div>";
+                            }
+                            markup += "</div>";
+                            markup += "<div><label>Nama barang yang ingin ditambahkan</label></div>";
+                            markup += "<div><input type='text' id='nama_barang' placeholder='Nama Barang' style='width: 100%; padding: 10px;'></div>";
+                            markup += "<div><label>Jumlah barang yang ingin ditambahkan</label></div>";
+                            markup += "<div><input type='text' id='jumlah_barang' value=0 style='width: 100%; padding: 10px;'></div>";
+                            markup += "<div class='dropdown' style='margin-top:20px;'><button type='button' class='btn btn-primary dropdown-toggle' data-toggle='dropdown'>Select Level</button>";
+                            markup += "<div class='dropdown-menu' id='levelRak'>";
+                            for(var i=0; i<response.jumlah_level;i++){
+                                markup += "<a class='dropdown-item' href='#' value = "+(i+1)+" >" +(i+1)+"</a>";
+                            }
+                            markup += "</div></div>";
+                            
+                            var markup2 = "<button type='button' class='btn' onclick = 'confirmButton("+response.rak[0].id_rak+")' style='color: white; background-color: #141f3d;'>Confirm</button>";
+                            $("#labelModal").html("Detail Rak " + response.nama_grup);
+                            $("#addBarang").html(markup);
+                            $("#footer_add").html(markup2);
+                            $(".dropdown-item").click(function(){
+                                selectedLevel = $(this).text();
+                                $(".dropdown-toggle").html("Level " + selectedLevel);
+                            })
+                            $('#addBarangModal').modal('show');
                         }
-                        markup += "</div></div>";
                         
-                        var markup2 = "<button type='button' class='btn' onclick = 'confirmButton("+response.rak[0].id_rak+")' style='color: white; background-color: #141f3d;'>Confirm</button>";
-                        $("#addBarang").html(markup);
-                        $("#footer_add").html(markup2);
-                        $(".dropdown-item").click(function(){
-                            selectedLevel = $(this).text();
-                            $(".dropdown-toggle").html("Level " + selectedLevel);
-                        })
-                        $('#addBarangModal').modal('show');
                     }
                 });
         }
 
         function confirmButton(id_rak){
+            var nama_barang = $("#nama_barang").val();
             var jumlah = $("#jumlah_barang").val();
+            selectedLevel = parseInt(selectedLevel);
+            console.log(nama_barang);
+            console.log(selectedLevel);
             alert(jumlah)
             $.ajax({
                     url:'sql/AddBarang_db.php',
@@ -210,12 +327,14 @@
                     datatype:'json',
                     data:{
                         id_rak:id_rak,
+                        nama:nama_barang,
                         jumlah:jumlah,
                         level:selectedLevel
                     },
                     success:function(response){
-                        response = $.parseJSON(response);
                         console.log(response);
+                        response = $.parseJSON(response);
+                        console.log(response.message);
                     }
                 });
             $("#addBarangModal").modal('hide');
