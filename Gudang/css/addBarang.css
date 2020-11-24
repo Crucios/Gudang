@@ -32,3 +32,12 @@ body{
     max-height: 200px;
     overflow-y: auto;
 }
+.bruh{
+    background-color: #513826;
+    color: #b89d64;
+    outline: none;
+}
+.bruh:hover,.bruh:active{
+    background-color: #b89d64;
+    color: #513826;
+}

@@ -17,18 +17,22 @@
            
     <body>
         <!-- jumbotron-->
-        <div class="jumbotron jumbotron-fluid" id="jumbotron" style="padding:0;height: 300px; background: linear-gradient(0deg, rgba(216,207,181,1) 0%, rgba(184,157,100,1) 100%);">
-        <a class="btn" id="back" style="margin:5% 0 0 5%;"><i class='fas fa-arrow-left' style='font-size:24px; '></i><b style="font-size:24px"> &nbsp;Back</b></a>
+        <div class="jumbotron jumbotron-fluid" id="jumbotron" style="padding:0;height: 200px; background: linear-gradient(0deg, rgba(216,207,181,1) 0%, rgba(184,157,100,1) 100%);">
+        <a class="btn" id="back" style="margin:2% 0 0 5%;"><i class='fas fa-arrow-left' style='font-size:24px; '></i><b style="font-size:24px"> &nbsp;Back</b></a>
             <div class="container">
-                <h1 class="text1" style="text-align: center;" onclick="home()">Sistem Manajemen Gudang</h1>
+                <h1 class="text1" style="text-align: center;">Manajemen Barang</h1>
+                <div id="name"></div>
             </div>
         </div>
+
             <!-- tabel list gudang-->
-            <div><h1 style="text-align:center;">Add Stocks Page</h1></div>
-            <div id="name"></div>
-            <div id="box">
+        <div>
+            <p style="text-align : center;margin : 0">*Klik grid yang mau tambahi barang</p>
+            <div class="col-sm-2"></div>
+            <div id="box" class="col-lg-8" style="border: 3px solid black;">
                 <div id="grid"></div>
             </div>
+            <div class="col-sm-2"></div>
         </div>
         <div class="container" id="listGrupRak">
     
@@ -260,14 +264,14 @@
                             markup += "<div><input type='text' id='nama_barang' placeholder='Nama Barang' style='width: 100%; padding: 10px;'></div>";
                             markup += "<div><label>Jumlah barang yang ingin ditambahkan</label></div>";
                             markup += "<div><input type='text' id='jumlah_barang' value=0 style='width: 100%; padding: 10px;'></div>";
-                            markup += "<div class='dropdown' style='margin-top:20px;'><button type='button' class='btn btn-primary dropdown-toggle' data-toggle='dropdown'>Select Level</button>";
+                            markup += "<div class='dropdown' style='margin-top:20px;'><button type='button' class='btn btn-primary dropdown-toggle' data-toggle='dropdown'><b>Select Level</b></button>";
                             markup += "<div class='dropdown-menu' id='levelRak'>";
                             for(var i=0; i<response.jumlah_level;i++){
                                 markup += "<a class='dropdown-item' href='#' value = "+(i+1)+" >" +(i+1)+"</a>";
                             }
                             markup += "</div></div>";
                             
-                            var markup2 = "<button type='button' class='btn' onclick = 'confirmButton("+id_rak+")' style='color: white; background-color: #141f3d;'>Confirm</button>";
+                            var markup2 = "<button type='button' class='btn' onclick = 'confirmButton("+id_rak+")' style='color:  #513826; background-color: #b89d64;'><b>Confirm</b></button>";
                             $("#labelModal").html("Detail Rak " + response.nama_grup);
                             $("#addBarang").html(markup);
                             $("#footer_add").html(markup2);
@@ -280,7 +284,7 @@
                         else if(response.message == "Berhasil") {
                             console.log(response.rak);
                             idRak = response.rak[0].id_rak;
-                            var markup = "<div id=\"modalOverflow\">";
+                            var markup = "<div id=\"modalOverflow\" style='border: 1px solid black;margin-top:0px'>";
                             for(var i=0; i<response.rak.length;i++){
                                 markup += "<div><label>" + (i+1) + "</label>"
                                 markup += "<label style='margin-left:10px;'>Nama Barang : " +response.rak[i].nama_barang+ "</label></div>";
@@ -292,14 +296,14 @@
                             markup += "<div><input type='text' id='nama_barang' placeholder='Nama Barang' style='width: 100%; padding: 10px;'></div>";
                             markup += "<div><label>Jumlah barang yang ingin ditambahkan</label></div>";
                             markup += "<div><input type='text' id='jumlah_barang' value=0 style='width: 100%; padding: 10px;'></div>";
-                            markup += "<div class='dropdown' style='margin-top:20px;'><button type='button' class='btn btn-primary dropdown-toggle' data-toggle='dropdown'>Select Level</button>";
+                            markup += "<div class='dropdown' style='margin-top:20px;'><button type='button' class='btn dropdown-toggle bruh' data-toggle='dropdown' style='background-color: #513826;color: #b89d64;'><b>Select Level</b></button>";
                             markup += "<div class='dropdown-menu' id='levelRak'>";
                             for(var i=0; i<response.jumlah_level;i++){
                                 markup += "<a class='dropdown-item' href='#' value = "+(i+1)+" >" +(i+1)+"</a>";
                             }
                             markup += "</div></div>";
                             
-                            var markup2 = "<button type='button' class='btn' onclick = 'confirmButton("+response.rak[0].id_rak+")' style='color: white; background-color: #141f3d;'>Confirm</button>";
+                            var markup2 = "<button type='button' class='btn' onclick = 'confirmButton("+response.rak[0].id_rak+")' style='color:  #513826; background-color: #b89d64;;'><b>Confirm</b></button>";
                             $("#labelModal").html("Detail Rak " + response.nama_grup);
                             $("#addBarang").html(markup);
                             $("#footer_add").html(markup2);

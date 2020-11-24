@@ -12,17 +12,20 @@
         <link rel="stylesheet" href="css/viewGudang.css">
     <body>
         <!-- jumbotron-->
-        <div class="jumbotron jumbotron-fluid" id="jumbotron" style="padding:0;height: 300px; background: linear-gradient(0deg, rgba(216,207,181,1) 0%, rgba(184,157,100,1) 100%);">
-        <a class="btn" id="back" style="margin:5% 0 0 5%;"><i class='fas fa-arrow-left' style='font-size:24px; '></i><b style="font-size:24px"> &nbsp;Back</b></a>
-            <div class="container">
-                <h1 class="text1" style="text-align: center;" onclick="home()">Sistem Manajemen Gudang</h1>
+        <div class="jumbotron jumbotron-fluid" id="jumbotron" style="padding:0;height: 200px; background: linear-gradient(0deg, rgba(216,207,181,1) 0%, rgba(184,157,100,1) 100%);">
+        <a class="btn" id="back" style="margin:2% 0 0 5%;"><i class='fas fa-arrow-left' style='font-size:24px; '></i><b style="font-size:24px"> &nbsp;Back</b></a>
+            <div class="container" id='name'>
+                <!-- <h1 id="name" class="text1" style="text-align: center;" >View</h1> -->
             </div>
         </div>
             <!-- tabel list gudang-->
-            <div id="name"></div>
-            <div id="box">
+            <!-- <div id="name"></div> -->
+            <!-- <p style="text-align : center;margin : 0">*Klik grid yang mau dilihat</p> -->
+            <div class="col-sm-2"></div>
+            <div id="box" class="col-lg-8" style="border: 3px solid black;">
                 <div id="grid"></div>
             </div>
+            <div class="col-sm-2"></div>
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script type="text/javascript">
@@ -67,7 +70,7 @@
                         var nama = responseJSON.nama;
                         
                         var markup = "";
-                        $("#name").html("<div class='title'><h2 style='text-align:center; margin-bottom:50px;'>Nama Gudang : " + nama + "</h2></div>");
+                        $("#name").html("<div class='title'><h1 style='text-align:center; margin-bottom:50px;'>View " + nama + "</h1></div>");
                         markup += "<table>";
                         var count = 0;
                         for(let i=0;i<ukuran_y;i++){

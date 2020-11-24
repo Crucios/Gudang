@@ -13,17 +13,18 @@ if (($_SESSION["login"]) == false) {
 <link rel="stylesheet" href="css/EditGudang.css">
 <body>
     <!-- jumbotron-->
-    <div class="jumbotron jumbotron-fluid" id="jumbotron" style="padding:0;height: 300px; background: linear-gradient(0deg, rgba(216,207,181,1) 0%, rgba(184,157,100,1) 100%);">
-        <a class="btn btn-back" id="back" style="margin:5% 0 0 5%;"><i class='fas fa-arrow-left' style='font-size:24px; '></i><b style="font-size:24px"> &nbsp;Back</b></a>
+    <div class="jumbotron jumbotron-fluid" id="jumbotron" style="padding:0;height: 200px; background: linear-gradient(0deg, rgba(216,207,181,1) 0%, rgba(184,157,100,1) 100%);">
+        <a class="btn btn-back" id="back" style="margin:2% 0 0 5%;"><i class='fas fa-arrow-left' style='font-size:24px; '></i><b style="font-size:24px"> &nbsp;Back</b></a>
         <div class="container">
-            <h1 class="text1" style="text-align: center;" onclick="home()">Sistem Manajemen Gudang</h1>
+            <h1 class="text1" style="text-align: center;">Edit Gudang</h1>
+            <div id="name"></div>
         </div>
     </div>
 
     <!-- isi data rak -->
 
     <div class="container">        
-        <button class="btn col-sm-8 offset-2"  id="btn_pilihpintu">1. Pilih Pintu Masuk</button><br><br>
+        <button class="btn col-sm-8 offset-2"  id="btn_pilihpintu"><b>1. Pilih Pintu Masuk</b></button><br><br>
         <table class="col-sm-8 offset-2" style="">
 
             <tr>
@@ -41,8 +42,8 @@ if (($_SESSION["login"]) == false) {
         </table>
         <br>
         
-        <button class="btn col-sm-8 offset-2"  id="btn_pilihrak">2. Pilih Rak</button><br><br>
-        <button class="btn col-sm-8 offset-2" id="btn_tambahrak" style="display:none;margin:0">Simpan</button>
+        <button class="btn col-sm-8 offset-2"  id="btn_pilihrak"><b>2. Pilih Rak</b></button><br><br>
+        <button class="btn col-sm-8 offset-2" id="btn_tambahrak" style="display:none;margin:0"><b>Simpan</b></button>
     </div>
     <datalist id="color_list">
         <option>#cb997e</option>
@@ -54,15 +55,20 @@ if (($_SESSION["login"]) == false) {
         <option>#b7b7a4</option>
     </datalist>
     <!-- tabel list gudang-->
-    <div id="box">
-        <div id="grid"></div>
-    </div><br><br>
-    <div class="container" id="listGrupRak">
+    <div class="row">
+        <div class="col-sm-2"></div>
+        <div id="box" style="border: 3px solid black;" class="col-8">
+            <div id="grid"></div>
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+    <br><br>
+    <div class="container" id="listGrupRak" style="padding-left: 130px">
 
     </div>
     <div class="container">
-        <button class="btn col-sm-8 offset-2" id="btn_pilihlintasan">3. Pilih Lintasan</button><br><br>
-        <button class="btn col-sm-8 offset-2" id="btn_save">Simpan ke Database</button><br><br>
+        <button class="btn col-sm-8 offset-2" id="btn_pilihlintasan"><b>3. Pilih Lintasan</b></button><br><br>
+        <button class="btn col-sm-8 offset-2" id="btn_save"><b>Simpan ke Database</b></button><br><br>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" href="js/EditGudang.js">
@@ -717,14 +723,12 @@ function btnRak(number){
 
             var name = temp_data_grup_rak[i].nama_grup;
             var color = temp_data_grup_rak[i].color;
-            markup += '<div class="row">' + '<div class="col-sm-2"></div>' +
-            '<p class="col-sm-2">' + name + '</p>' +
-            '<input type="color" value="'+ color +'" list="color_list" disabled> &nbsp;&nbsp;';
+            markup += '<div class="row">' + '<p class="col-sm-2 namabarang">' + name + '</p>' + '<div class="col-sm-2"><input type="color" value="'+ color +'" list="color_list" disabled></div>';
 
             if(temp_data_grup_rak[i].nama_grup.toLowerCase() != "pintu" && temp_data_grup_rak[i].nama_grup.toLowerCase() != "lintasan"){
-                markup += '<button class="btn btn-info col-sm-2 select_grup" onClick="selectGrup(\'' + name + '\')">Select</button> &nbsp;&nbsp;&nbsp;' +
-                '<button class="btn btn-info col-sm-2 delete_rak" onClick="deleteRak(\'' + name + '\')">Delete Rak</button>  &nbsp;&nbsp;&nbsp'+
-                '<button class="btn btn-info col-sm-2 delete_grup" onClick="deleteGrup(\'' + name + '\')">Delete All</button>;';
+                markup += '<button class="btn btn-info col-sm-2 select_grup" onClick="selectGrup(\'' + name + '\')"><b>Select</b></button> &nbsp;&nbsp;&nbsp;' +
+                '<button class="btn btn-info col-sm-2 delete_rak" onClick="deleteRak(\'' + name + '\')"><b>Delete Rak</b></button>  &nbsp;&nbsp;&nbsp'+
+                '<button class="btn btn-info col-sm-2 delete_grup" onClick="deleteGrup(\'' + name + '\')"><b>Delete All</b></button><div class="col-sm-2"></div>';
             }
             markup += '</div><br>';
 

@@ -11,10 +11,10 @@
                 echo "<div class='judul'><h4 class='namagud'>" .$row['nama']. "</h4></div>";
                 echo "<div class='keterangan'><p class='para'>" .$row['alamat']. "</p></div>";
                 echo "<div class='menu'>";
-                echo "<div class='edit'><button type='button' class='btn' id='editButton' onclick='editGudang(\"" . $row['id_gudang'] . "\")'>Edit</button></div>";
-                echo "<div class='view'><button type='button' class='btn' id='viewButton' onclick='viewGudang(\"" . $row['id_gudang'] . "\")'>View</button></div>";
+                echo "<div class='edit'><button type='button' class='btn' id='editButton' onclick='editGudang(\"" . $row['id_gudang'] . "\")'><b>Edit</b></button></div>";
+                echo "<div class='view'><button type='button' class='btn' id='viewButton' onclick='viewGudang(\"" . $row['id_gudang'] . "\")'><b>View</b></button></div>";
                 if($_SESSION["type"] == 0){
-                    echo "<div class='delete'><button type='button' class='btn' id='deleteButton' onclick='deleteGudang(\"" . $row['id_gudang'] . "\")'>Delete</button></div>";
+                    echo "<div class='delete'><button type='button' class='btn' id='deleteButton' onclick='deleteGudang(\"" . $row['id_gudang'] . "\")'><b>Delete</b></button></div>";
                 }
                 echo "</div></div></div>";
             }
@@ -29,10 +29,10 @@
                 echo "<div class='judul'><h4 class='namagud'>" .$row['nama']. "</h4></div>";
                 echo "<div class='keterangan'><p class='para'>" .$row['alamat']. "</p></div>";
                 echo "<div class='menu'>";
-                echo "<div class='edit'><button type='button' class='btn' id='editButton' onclick='editGudang(\"" . $row['id_gudang'] . "\")'>Edit</button></div>";
-                echo "<div class='view'><button type='button' class='btn' id='viewButton' onclick='viewGudang(\"" . $row['id_gudang'] . "\")'>View</button></div>";
+                echo "<div class='edit'><button type='button' class='btn' id='editButton' onclick='editGudang(\"" . $row['id_gudang'] . "\")'><b>Edit</b></button></div>";
+                echo "<div class='view'><button type='button' class='btn' id='viewButton' onclick='viewGudang(\"" . $row['id_gudang'] . "\")'><b>View</b></button></div>";
                 if($_SESSION["type"] == 0){
-                    echo "<div class='delete'><button type='button' class='btn' id='deleteButton' onclick='deleteGudang(\"" . $row['id_gudang'] . "\")'>Delete</button></div>";
+                    echo "<div class='delete'><button type='button' class='btn' id='deleteButton' onclick='deleteGudang(\"" . $row['id_gudang'] . "\")'><b>Delete</b></button></div>";
                 }
                 echo "</div></div></div>";
             }

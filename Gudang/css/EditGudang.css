@@ -14,8 +14,7 @@ body{
 }
 
 #box{
-    margin: 50px auto 50px auto;
-    padding: 0 50px;
+    padding: 0 5%;
     max-height: 600px;
     overflow: auto;
 }

@@ -17,23 +17,23 @@
     <!-- jumbotron-->
     <div class="jumbotron jumbotron-fluid" id="jumbotron" style="height: 200px;">
         <div class="container">
-            <h2 class="text1" style="text-align: center; ">Sistem Manajemen Gudang</h2>
-            <p class="text2" style="text-align: center; "></p>
+            <h1 class="text1" style="text-align: center; ">Sistem Manajemen Gudang</h2>
         </div>
+        <div class="row">   
+                <p class="btn btn-danger" id="logoutButton" style="font-size : 18pt; width:min-content; margin: auto 2% 2% auto">Logout</p>
+            </div>
         <!--<p style="float:right; margin-right:20px;" id="logoutButton">Logout</p>-->
     </div>
 
     <div class="wrapper">
-        <div class="row">   
-            <p class="btn" id="logoutButton" style="font-size : 20pt; width:min-content; margin: auto 10% 2% auto">Logout</p>
-        </div>
+        
         <div class="row">
             <div class="col-sm-8">
                 <h1 style="margin-left:10%;">List Gudang</h1>
             </div>
             <div class="col-sm-3 searchbar">
                 <!-- search bar-->
-                <div class="form-group"                                     >
+                <div class="form-group">
                     <input type="text" class="form-control" id="search" placeholder="Search . . .">
                 </div>
                 <!--button-->
@@ -65,7 +65,7 @@
                         <input type="email" name="email" id="a_email" placeholder="Masukkan email anda.." style="width: 100%; padding: 10px;">
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn" onclick = "confirmButton()" style="color: #b89d64; background-color: #513826;">Confirm</button>
+                        <button type="button" class="btn" onclick = "confirmButton()" style="color: #b89d64; background-color: #513826;"><b>Confirm</b></button>
                     </div>
                 </div>
             </div>
@@ -141,8 +141,8 @@
     function addUserButton(){
         var type = <?php echo $_SESSION["type"]; ?> ;
         if(type == 0) {
-            var add = "<button type='button' class='btn' id='adduser' onclick='addUser()' style='margin-right:10px;'>Add User</button>";
-            add += "<button type='button' class='btn' id='addPage'>Add Gudang</button>";
+            var add = "<button type='button' class='btn' id='adduser' onclick='addUser()' style='margin-right:10px;'><b>Add User</b></button>";
+            add += "<button type='button' class='btn' id='addPage'><b>Add Gudang</b></button>";
             $("#buttons").html(add);    
         }
     }
