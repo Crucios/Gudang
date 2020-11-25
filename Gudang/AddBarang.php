@@ -25,6 +25,10 @@
             </div>
         </div>
 
+        <div class = "footer" align = "center">
+        <button type="button" class="btn" onclick= "home()" style='color:  #513826; background-color: #b89d64; margin-bottom : 10px;' ><b>Home</b></button>
+        </div>
+        
             <!-- tabel list gudang-->
         <div>
             <p style="text-align : center;margin : 0">*Klik grid yang mau tambahi barang</p>
@@ -38,9 +42,7 @@
     
         </div>
 
-        <div class = "footer" align = "center">
-        <button type="button" class="btn" onclick= "home()" style='color:  #513826; background-color: #b89d64; margin-bottom : 10px;' ><b>Home</b></button>
-        </div>
+        
 
         <div class="modal fade" id="addBarangModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -272,7 +274,9 @@
                             markup += "<div><input type='text' id='nama_barang' placeholder='Nama Barang' style='width: 100%; padding: 10px;'></div>";
                             markup += "<div><label>Jumlah barang yang ingin ditambahkan</label></div>";
                             markup += "<div><input type='text' id='jumlah_barang' value=0 style='width: 100%; padding: 10px;'></div>";
-                            markup += "<div class='dropdown' style='margin-top:20px;'><button type='button' class='btn btn-primary dropdown-toggle' data-toggle='dropdown'><b>Select Level</b></button>";
+                            markup += "<div><label>Berat satuan (Kg)</label></div>";
+                            markup += "<div><input type='text' id='berat_barang' value=0 style='width: 100%; padding: 10px;'></div>";
+                            markup += "<div class='dropdown' style='margin-top:20px;'><button type='button' class='btn btn-primary dropdown-toggle' data-toggle='dropdown' style='background-color: #513826;color: #b89d64;'><b>Select Level</b></button>";
                             markup += "<div class='dropdown-menu' id='levelRak'>";
                             for(var i=0; i<response.jumlah_level;i++){
                                 markup += "<a class='dropdown-item' href='#' value = "+(i+1)+" >" +(i+1)+"</a>";
@@ -298,12 +302,15 @@
                                 markup += "<label style='margin-left:10px;'>Nama Barang : " +response.rak[i].nama_barang+ "</label></div>";
                                 markup += "<div><label style='margin-left:30px;'>Level " +response.rak[i].level+ "</label></div>";
                                 markup += "<div><label style='margin-left:30px;'>Jumlah Sekarang : " +response.rak[i].kuantitas+ "</label></div>";
+                                markup += "<div><label style='margin-left:30px;'>Berat Satuan (Kg) : " +response.rak[i].berat+ "</label></div>";
                             }
                             markup += "</div>";
                             markup += "<div><label>Nama barang yang ingin ditambahkan</label></div>";
                             markup += "<div><input type='text' id='nama_barang' placeholder='Nama Barang' style='width: 100%; padding: 10px;'></div>";
                             markup += "<div><label>Jumlah barang yang ingin ditambahkan</label></div>";
                             markup += "<div><input type='text' id='jumlah_barang' value=0 style='width: 100%; padding: 10px;'></div>";
+                            markup += "<div><label>Berat satuan (Kg)</label></div>";
+                            markup += "<div><input type='text' id='berat_barang' value=0 style='width: 100%; padding: 10px;'></div>";
                             markup += "<div class='dropdown' style='margin-top:20px;'><button type='button' class='btn dropdown-toggle bruh' data-toggle='dropdown' style='background-color: #513826;color: #b89d64;'><b>Select Level</b></button>";
                             markup += "<div class='dropdown-menu' id='levelRak'>";
                             for(var i=0; i<response.jumlah_level;i++){
@@ -311,7 +318,7 @@
                             }
                             markup += "</div></div>";
                             
-                            var markup2 = "<button type='button' class='btn' onclick = 'confirmButton("+response.rak[0].id_rak+")' style='color:  #513826; background-color: #b89d64;;'><b>Confirm</b></button>";
+                            var markup2 = "<button type='button' class='btn' onclick = 'confirmButton("+response.rak[0].id_rak+")' style='color:  #513826; background-color: #b89d64;'><b>Confirm</b></button>";
                             $("#labelModal").html("Detail Rak " + response.nama_grup);
                             $("#addBarang").html(markup);
                             $("#footer_add").html(markup2);
@@ -329,6 +336,7 @@
         function confirmButton(id_rak){
             var nama_barang = $("#nama_barang").val();
             var jumlah = $("#jumlah_barang").val();
+            var berat = $("#berat_barang").val();
             selectedLevel = parseInt(selectedLevel);
             console.log(nama_barang);
             console.log(selectedLevel);
@@ -341,6 +349,7 @@
                         id_rak:id_rak,
                         nama:nama_barang,
                         jumlah:jumlah,
+                        berat:berat,
                         level:selectedLevel
                     },
                     success:function(response){

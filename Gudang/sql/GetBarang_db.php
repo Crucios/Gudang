@@ -2,7 +2,7 @@
 	require_once "../../php/connect.php";
 
 	$data_rak=array("rak" => array(), 'message' => null, 'nama_grup' => null, 'jumlah_level' => 0);
-	$data_barang=array("id_barang" => null, "nama_barang" => null, "kuantitas" => 0, "id_rak" => null, "level" => 0);
+	$data_barang=array("id_barang" => null, "nama_barang" => null, "kuantitas" => 0, "id_rak" => null, "level" => 0, "berat" => 0);
 	if(isset($_GET['id_rak']) && isset($_GET['id_rak']) != ""){
 		$id_rak=$_GET['id_rak'];
 		$jumlah_level = 0;
@@ -25,6 +25,7 @@
 				$data_barang["kuantitas"] = $row["kuantitas"];
 				$data_barang["id_rak"] = $row["id_rak"];
 				$data_barang["level"] = $row["level"];
+				$data_barang["berat"] = $row["berat"];
 				array_push($data_rak["rak"], $data_barang);
 				$data_rak['message'] = $data_barang["id_barang"];
 			}
