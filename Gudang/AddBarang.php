@@ -38,6 +38,10 @@
     
         </div>
 
+        <div class = "footer" align = "center">
+        <button type="button" class="btn" onclick= "home()" style='color:  #513826; background-color: #b89d64; margin-bottom : 10px;' ><b>Home</b></button>
+        </div>
+
         <div class="modal fade" id="addBarangModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -230,6 +234,8 @@
         });
         
         function btnRak(number, id_gudang){
+            console.log(number);
+            console.log(id_gudang);
                 $.ajax({
                     url:'sql/GetSpecifiedRak_db.php',
                     type:'GET',
@@ -240,7 +246,9 @@
                     },
                     success:function(response){
                         response = $.parseJSON(response);
-                        showModal(response.idRak);
+                        if(response.nama_grup != "Pintu" && response.nama_grup != "lintasan" && response.nama_grup != null){
+                            showModal(response.idRak);
+                        }
                     }
                 });
         }
