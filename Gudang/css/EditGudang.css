@@ -11,6 +11,7 @@ body{
 .gridCells{
     border: 1px solid;
     text-align: center;
+    word-wrap: break-word;
 }
 
 #box{

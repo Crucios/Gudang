@@ -444,7 +444,7 @@ function getListGrupRak(){
             console.log(response);
             for(var i=0;i<response.grup_rak.length;i++){
                 var grup_rak=response.grup_rak[i];
-
+                var id_grup = grup_rak.id_gruprak;
                 var nama_grup=grup_rak.nama_grup;
                 var colorRak=grup_rak.color;
 
@@ -457,13 +457,18 @@ function getListGrupRak(){
                                 var posisi_urutan = rak[j].posisi_urutan;
                                 $("#"+posisi_urutan).css({'background-color':colorRak});
                                 // $("#"+posisi_urutan).html(nama_grup);
-
+                                
+                                if(nama_grup != "Pintu" && nama_grup != "lintasan"){
+                                    $("#"+posisi_urutan).html(id_grup);
+                                }
+                                
                                 var koor=[rak[j].koordinat_x, rak[j].koordinat_y];                    
                                 a.push(koor);
                                 b.push(posisi_urutan);
                             }
                             
                             temp_data_grup_rak.push({
+                                id_grup: id_grup,
                                 nama_grup: nama_grup,
                                 koordinat:a,
                                 value:b,
@@ -471,6 +476,7 @@ function getListGrupRak(){
                             });
 
                             data_grup_rak.push({
+                                id_grup: id_grup,
                                 nama_grup: nama_grup,
                                 koordinat:a,
                                 value:b,
@@ -720,10 +726,18 @@ function btnRak(number){
         var length = temp_data_grup_rak.length;
         var markup = "";
         for (var i = 0; i < length; i++) {
-
+            var id = temp_data_grup_rak[i].id_grup;
             var name = temp_data_grup_rak[i].nama_grup;
             var color = temp_data_grup_rak[i].color;
-            markup += '<div class="row">' + '<p class="col-sm-2 namabarang">' + name + '</p>' + '<div class="col-sm-2"><input type="color" value="'+ color +'" list="color_list" disabled></div>';
+
+            if(name != "Pintu" && name != "lintasan"){
+                markup += '<div class="row">' + '<div class="col-sm-2"></div>' +
+                '<p class="col-sm-2">' + name + '&nbsp (' + id + ') </p>';
+            }
+            else{
+                markup += '<div class="row">' + '<div class="col-sm-2"></div>' +
+                '<p class="col-sm-2">' + name + '</p>';
+            }
 
             if(temp_data_grup_rak[i].nama_grup.toLowerCase() != "pintu" && temp_data_grup_rak[i].nama_grup.toLowerCase() != "lintasan"){
                 markup += '<button class="btn btn-info col-sm-2 select_grup" onClick="selectGrup(\'' + name + '\')"><b>Select</b></button> &nbsp;&nbsp;&nbsp;' +
